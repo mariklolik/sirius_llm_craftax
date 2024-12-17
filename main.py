@@ -49,9 +49,12 @@ if __name__ == "__main__":
         # prompt = env_to_prompt()
         # task = gpt(prompt - придумай task)
         # action_source = gpt(task + prompt) спрашиваем как в текущих условиях решить поставлениную задачу
+        
         # action_working = validate(action_source)
         # if action_working:
-        #   add_action_to_db(action_source)
+        #   action_desc = gpt3.5(action_source) # получаем описание
+        #
+        #   add_action_to_db(action_source, action_desc) #emb считаем по описанию, кладем в базу исходник
         # 
         # calc cosine_similarity(task, all_sources_in_db)
         # actions = choose top-p = 0.5 actions
@@ -60,5 +63,5 @@ if __name__ == "__main__":
         #  
         pass
         
-    
+    log_metrics(env)
     logger.info('Finished')
