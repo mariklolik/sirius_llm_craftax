@@ -3,9 +3,9 @@ import logging
 import sys
 import os
 
-from src.primitives.checks import check_inventory_wood
-from src.primitives.mine_block import mine_block
-from src.primitives.simple_actions import act_PLACE_TABLE, act_MAKE_WOOD_PICKAXE, act_DO, act_PLACE_FURNACE, \
+from primitives.checks import check_inventory_wood
+from primitives.mine_block import mine_block
+from primitives.simple_actions import act_PLACE_TABLE, act_MAKE_WOOD_PICKAXE, act_DO, act_PLACE_FURNACE, \
     act_MAKE_IRON_SWORD, act_MAKE_STONE_PICKAXE, act_MAKE_IRON_PICKAXE
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -16,11 +16,11 @@ from craftax.craftax.constants import BlockType
 from craftax.craftax_env import make_craftax_env_from_name
 import craftax.craftax.renderer as renderer
 
-from src.primitives.explore import explore_choose_node
-from src.primitives.gifs import visual_testing
-from src.primitives.move_to_node_smart import gen_graph_smart, move_to_pos
-from src.primitives.utils import find_block_any, find_block_all
-from src.primitives.wrapper import SaveStateWrapper
+from primitives.explore import explore_choose_node
+from primitives.gifs import visual_testing
+from primitives.move_to_node_smart import gen_graph_smart, move_to_pos
+from primitives.utils import find_block_any, find_block_all
+from primitives.wrapper import SaveStateWrapper
 
 SEED = 0xBAD_5EED_B00B5
 
