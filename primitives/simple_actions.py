@@ -61,3 +61,19 @@ def act_MAKE_IRON_ARMOUR(env):
 def act_MAKE_DIAMOND_ARMOUR(env):
     action = Action.MAKE_DIAMOND_ARMOUR
     executor(env, [action])
+
+def act_UP(env):
+    action = Action.UP
+    executor(env, [action])
+
+def act_DOWN(env):
+    action = Action.DOWN
+    executor(env, [action])
+
+def act_LEFT(env):
+    action = Action.LEFT
+    executor(env, [action])
+
+def act_RIGHT(env):
+    action = Action.RIGHT
+    executor(env, [action])
