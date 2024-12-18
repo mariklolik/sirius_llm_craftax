@@ -1,6 +1,6 @@
 
 def validate_skill(skill_source:str):
-    return NotImplementedError
+    return "hello"
 
 def add_skill_db(skill_source:str):
     return NotImplementedError
