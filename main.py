@@ -48,8 +48,14 @@ if __name__ == "__main__":
     while not game_finished:
         # prompt = env_to_prompt()
         # task = gpt(prompt - придумай task)
-        # action_source = gpt(task + prompt) спрашиваем как в текущих условиях решить поставлениную задачу
-        
+        action_source = gpt(task + prompt)# спрашиваем как в текущих условиях решить поставлениную задачу
+        while True:
+            try:
+                eval(action_source)
+            except Exception as exp:
+                action_source = gpt(task + prompt + " last code catch error: " + exp)
+                continue
+            break
         # action_working = validate(action_source)
         # if action_working:
         #   action_desc = gpt3.5(action_source) # получаем описание
