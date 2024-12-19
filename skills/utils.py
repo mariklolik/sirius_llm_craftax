@@ -17,10 +17,12 @@ class YandexEmbeddingModel:
         return self.query_model.run(text)
 
 class SkillManager:
-    def __init__(self, db_src: str, sdk, system_prompt_src):
+    def __init__(self, db_src: str, sdk):
         emb_model = YandexEmbeddingModel(sdk)
-        with open(system_prompt_src) as f:
-            system_prompt(f.read())
+        self.gpt = sdk.models.completions("yandexgpt")
+        self.gpt = self.gpt.configure(temperature=0.0)
+        with open("SkillDescriptorSystemPrompt.txt") as f:
+            self.system_prompt = f.read()
         self.db = Chroma(persist_directory=db_src, embedding_function=emb_model)
         self.db.persist()
 
@@ -30,7 +32,12 @@ class SkillManager:
         return docs
     
     def get_description(self, skill_source:str):
-        descr = model(skill_source)
+        descr = self.gpt.run([
+            {"role": "system",
+             "text": self.system_prompt},
+            {"role": "user",
+             "text": skill_source}
+        ]).alternatives[0].text
         return descr
 
     def add_skill(self, skill_source:str):
