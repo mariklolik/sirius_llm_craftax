@@ -3,7 +3,7 @@ from langchain_core.documents.base import Document
 from yandex_cloud_ml_sdk import YCloudML
 
 def validate_skill(skill_source:str):
-    return NotImplementedError
+    return "hello"
 
 class YandexEmbeddingModel:
     def __init__(self, sdk):

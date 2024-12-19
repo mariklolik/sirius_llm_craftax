@@ -2,11 +2,9 @@ import importlib
 import logging
 import sys
 import os
-#faefae
-from craftax.craftax_env import make_craftax_env_from_name
-from primitives.wrapper import SaveStateWrapper
 
 from skills.utils import init_db
+from game import create_env, get_achievements
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs')
@@ -14,15 +12,16 @@ os.makedirs(log_dir, exist_ok=True)
 
 SEED = 0xBAD_5EED_B00B5
 
-def env_to_prompt(env):
+def state_to_prompt(state):
     return NotImplementedError
 
-def envoke_action(env, act):
-    return NotImplementedError
+def envoke_action(state, code):
+    func = eval(code)
+    obs, state, reward, done, info = func(state)
+    return state, done
 
-def log_metrics(env):
+def log_metrics(state):
     return NotImplementedError
-
 
 
 if __name__ == "__main__":
@@ -34,9 +33,7 @@ if __name__ == "__main__":
     handler = logging.StreamHandler(sys.stdout)
     logger.addHandler(handler)
 
-    env = make_craftax_env_from_name("Craftax-Symbolic-v1", auto_reset=False)
-    env = SaveStateWrapper(env, seed=SEED, log_dir="./logs")
-    obs, state = env.reset()
+    state = create_env(SEED)
 
     with open(log_dir + '/actions.txt', 'w') as f:
         pass
@@ -59,9 +56,13 @@ if __name__ == "__main__":
         # calc cosine_similarity(task, all_sources_in_db)
         # actions = choose top-p = 0.5 actions
         # for act in actions:
-        #   envoke_action(env, act)
+        #   env, done = envoke_action(env, act)
+        #   if done:
+        #       info, rewards = get_achievements(env)
+        #       break
+        #
         #  
         pass
         
-    log_metrics(env)
+    log_metrics(state)
     logger.info('Finished')

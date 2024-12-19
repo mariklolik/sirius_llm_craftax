@@ -6,3 +6,5 @@ tqdm~=4.66.5
 pillow~=10.4.0
 gym~=0.26.2
 matplotlib
+python-dotenv
+yandex_cloud_ml_sdk
