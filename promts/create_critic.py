@@ -1,4 +1,4 @@
-def questions_prompt_template(state, completedTask, failedTask):
+def critic_prompt_template(state, final_task, reasoning, completedTask, failedTask):
     mapBlocks = state.map[state.player_level].tolist()
     mapItems = state.item_map[state.player_level].tolist()
     mapLight = state.light_map[state.player_level].tolist()
@@ -13,6 +13,6 @@ def questions_prompt_template(state, completedTask, failedTask):
     isResting = state.is_resting
     inventory = state.inventory
     achievement = state.achievements.tolist()
-    text = open("curriculum_qa_step1_ask_questions.txt", "r").read()
-    text = text.format(mapBlocks, mapItems, mapLight, playerPosition, playerHealth, playerHunger, playerDrink, playerEnergy, playerLevel, playerMana, isSleeping, isResting, inventory, achievement, completedTask, failedTask)
+    text = open("critic.txt").read()
+    text = text.format(mapBlocks, mapItems, mapLight, playerPosition, playerHealth, playerHunger, playerDrink, playerEnergy, playerLevel, playerMana, isSleeping, isResting, inventory, achievement, completedTask, failedTask, final_task, reasoning)
     return text
