@@ -8,3 +8,8 @@ gym~=0.26.2
 matplotlib
 python-dotenv
 yandex_cloud_ml_sdk
+langchain-community
+toolz
+msgpack
+seaborn
+chromadb

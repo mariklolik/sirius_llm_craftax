@@ -1,6 +1,8 @@
 from langchain.vectorstores import Chroma
 from langchain_core.documents.base import Document
-from yandex_cloud_ml_sdk import YCloudML
+import logging
+
+logger = logging.getLogger("SkillManager")
 
 def validate_skill(skill_source:str):
     return "hello"
@@ -21,10 +23,11 @@ class SkillManager:
         emb_model = YandexEmbeddingModel(sdk)
         self.gpt = sdk.models.completions("yandexgpt")
         self.gpt = self.gpt.configure(temperature=0.0)
-        with open("SkillDescriptorSystemPrompt.txt") as f:
+        with open("skills/SkillDescriptorSystemPrompt.txt") as f:
+            
             self.system_prompt = f.read()
         self.db = Chroma(persist_directory=db_src, embedding_function=emb_model)
-
+        
         files_with_functions = ["simple_actions.py", "checks.py", "explore.py", "explore_until.py", "utils.py", "move_to_node_smart.py", "mine_block.py"]
         for file_name in files_with_functions:
             with open("/../primitives/" + file_name) as f:
@@ -32,6 +35,7 @@ class SkillManager:
                 funcs = self.split_functions(text)
                 for func in funcs:
                     self.add_skill(func)
+                    
 
     def split_functions(code: str):
         lines = code.split('\n')
@@ -68,6 +72,7 @@ class SkillManager:
         skill_description = self.get_description(skill_source)
         doc = Document(page_content = skill_description, metadata = {"code": skill_source})
         self.db.add_documents([doc])
+        logger.info(f'Skill added {skill_description}')
 
     def save(self):
         self.db.persist()
