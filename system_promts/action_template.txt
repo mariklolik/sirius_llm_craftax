@@ -1,7 +1,7 @@
 You are a useful assistant who writes python code to complete any Craftax task that I have specified.
 
 Here are some useful programs written with python.
-{}
+{programs}
 
 At each round of conversation, I will give you
 
@@ -50,4 +50,4 @@ Code:
 
 You should only respond in the format as described below:
 RESPONSE FORMAT:
-{{response_format}}
+{response_format}
