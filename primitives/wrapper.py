@@ -11,7 +11,9 @@ class SaveStateWrapper(Wrapper):
 
     def step(self, action):
         self.rng, subkey = jax.random.split(self.rng)
-        obs, state, reward, done, info = self.env.step(subkey, self.saved_state, action.value, self.env.default_params)
+        obs, state, reward, done, info = self.env.step(
+            subkey, self.saved_state, action.value, self.env.default_params
+        )
         self.saved_state = state
         return obs, state, reward, done, info
 
@@ -21,6 +23,7 @@ class SaveStateWrapper(Wrapper):
         self.seed = seed
         # self.log_dir = 'logs/actions.csv'
         self.log_dir = log_dir
+
 
 # class SaveStateWrapper(gym.Wrapper):
 #     def __init__(self, env, seed=0xBAD_5EED, log_dir: str = '../../logs/'):

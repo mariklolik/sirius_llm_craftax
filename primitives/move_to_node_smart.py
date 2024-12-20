@@ -13,13 +13,15 @@ DIRECTIONS_TO_ACTIONS = {
     (0, -1): Action.LEFT,
     (0, 1): Action.RIGHT,
     (-1, 0): Action.UP,
-    (1, 0): Action.DOWN
+    (1, 0): Action.DOWN,
 }
+
 
 def to_node(pos: jax.numpy.ndarray):
     return pos[0].item(), pos[1].item()
 
-INF_WEIGHT = 10 ** 6
+
+INF_WEIGHT = 10**6
 BLOCK_WEIGHT = {
     BlockType.INVALID: INF_WEIGHT,
     BlockType.OUT_OF_BOUNDS: INF_WEIGHT,
@@ -36,7 +38,6 @@ BLOCK_WEIGHT = {
     BlockType.FURNACE: 15,
     BlockType.SAND: 1,
     BlockType.LAVA: 15,
-
     # пока не работаем с этим
     BlockType.PLANT: INF_WEIGHT,
     BlockType.RIPE_PLANT: INF_WEIGHT,
@@ -59,7 +60,7 @@ BLOCK_WEIGHT = {
     BlockType.GRAVE: INF_WEIGHT,
     BlockType.GRAVE2: INF_WEIGHT,
     BlockType.GRAVE3: INF_WEIGHT,
-    BlockType.NECROMANCER_VULNERABLE: INF_WEIGHT
+    BlockType.NECROMANCER_VULNERABLE: INF_WEIGHT,
 }
 
 NEED_DIG = [
@@ -69,27 +70,28 @@ NEED_DIG = [
     BlockType.DIAMOND,
     BlockType.CRAFTING_TABLE,
     BlockType.FURNACE,
-    BlockType.WOOD
+    BlockType.WOOD,
 ]
 
-NEED_CHOP = [
-    BlockType.TREE
-]
+NEED_CHOP = [BlockType.TREE]
 
-NEED_PLACE = [
-    BlockType.WATER,
-    BlockType.LAVA
-]
+NEED_PLACE = [BlockType.WATER, BlockType.LAVA]
 
-def gen_graph_smart(state: EnvState,
-                    can_dig=False,
-                    can_place=False) -> nx.DiGraph:
+
+def gen_graph_smart(
+    state: EnvState, can_dig=False, can_place=False
+) -> nx.DiGraph:
     mask = get_obs_mask(state)
     start_pos = state.player_position
     level = state.player_level
 
     G = nx.DiGraph()
-    G.add_node(to_node(start_pos), block_type=BlockType(state.map[level][start_pos[0], start_pos[1]].item()))
+    G.add_node(
+        to_node(start_pos),
+        block_type=BlockType(
+            state.map[level][start_pos[0], start_pos[1]].item()
+        ),
+    )
 
     q = Queue()
     q.put(start_pos)
@@ -103,7 +105,9 @@ def gen_graph_smart(state: EnvState,
         for direction in DIRECTIONS[1:5]:
             neighbor = cur_pos + direction
             neighbor_node = to_node(neighbor)
-            neighbor_type: BlockType = BlockType(state.map[level][neighbor[0], neighbor[1]].item())
+            neighbor_type: BlockType = BlockType(
+                state.map[level][neighbor[0], neighbor[1]].item()
+            )
 
             if not is_in_obs(state, neighbor, mask, level):
                 continue
@@ -116,43 +120,67 @@ def gen_graph_smart(state: EnvState,
                 q.put(neighbor)
             weight = BLOCK_WEIGHT[neighbor_type]
             G.add_node(neighbor_node, block_type=neighbor_type)
-            G.add_edge(cur_node, neighbor_node, weight=weight, direction=direction)
+            G.add_edge(
+                cur_node, neighbor_node, weight=weight, direction=direction
+            )
 
     return G
 
 
-def move_to_node_planner(state: EnvState, G: nx.DiGraph,
-                       target_node: tuple[int, int]) -> list[Action]:
-    if not target_node in G.nodes: return []
+def move_to_node_planner(
+    state: EnvState, G: nx.DiGraph, target_node: tuple[int, int]
+) -> list[Action]:
+    if not target_node in G.nodes:
+        return []
 
-    nodes = nx.dijkstra_path(G, source=to_node(state.player_position), target=target_node)
+    nodes = nx.dijkstra_path(
+        G, source=to_node(state.player_position), target=target_node
+    )
 
     actions = []
     for i in range(len(nodes) - 1):
         cur_node, next_node = nodes[i], nodes[i + 1]
 
-        direction: tuple[int, int] = G.edges[cur_node, next_node]["direction"].tolist()
+        direction: tuple[int, int] = G.edges[cur_node, next_node][
+            "direction"
+        ].tolist()
         direction = tuple(direction)
-        block_type: BlockType = G.nodes[next_node]['block_type']
+        block_type: BlockType = G.nodes[next_node]["block_type"]
 
-        actions.append(DIRECTIONS_TO_ACTIONS[direction])  # либо разворот в непроходимый блок, либо движение в проходимый
+        actions.append(
+            DIRECTIONS_TO_ACTIONS[direction]
+        )  # либо разворот в непроходимый блок, либо движение в проходимый
 
-        if block_type in NEED_DIG and next_node != target_node:  # только если это препятствие на пути, а не конечная цель
+        if (
+            block_type in NEED_DIG and next_node != target_node
+        ):  # только если это препятствие на пути, а не конечная цель
             actions.append(Action.DO)  # убрать и пройти
             actions.append(DIRECTIONS_TO_ACTIONS[direction])
 
-        if block_type in NEED_PLACE and next_node != target_node:  # только если это препятствие на пути, а не конечная цель
-            actions.append(Action.PLACE_STONE)  # поставить блок и пройти на него
+        if (
+            block_type in NEED_PLACE and next_node != target_node
+        ):  # только если это препятствие на пути, а не конечная цель
+            actions.append(
+                Action.PLACE_STONE
+            )  # поставить блок и пройти на него
             actions.append(DIRECTIONS_TO_ACTIONS[direction])
 
-        if block_type in NEED_CHOP and next_node != target_node:  # только если это препятствие на пути, а не конечная цель
+        if (
+            block_type in NEED_CHOP and next_node != target_node
+        ):  # только если это препятствие на пути, а не конечная цель
             actions.append(Action.DO)  # собрать блок и пройти на его место
             actions.append(DIRECTIONS_TO_ACTIONS[direction])
 
     return actions
 
-def move_to_pos(env, target_pos: jax.numpy.ndarray, G: nx.DiGraph = None,
-                can_dig=False, can_place=False):
+
+def move_to_pos(
+    env,
+    target_pos: jax.numpy.ndarray,
+    G: nx.DiGraph = None,
+    can_dig=False,
+    can_place=False,
+):
     state = env.saved_state
 
     if G is None:

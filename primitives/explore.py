@@ -5,9 +5,12 @@ from craftax.craftax.craftax_state import EnvState
 from .move_to_node_smart import to_node
 
 
-def explore_choose_node(env, G: nx.Graph, prev_pos: jax.numpy.ndarray = None, dist = 5):
+def explore_choose_node(
+    env, G: nx.Graph, prev_pos: jax.numpy.ndarray = None, dist=5
+):
     state: EnvState = env.saved_state
-    if not to_node(prev_pos) in G.nodes: return None
+    if not to_node(prev_pos) in G.nodes:
+        return None
     nodes = jax.numpy.array(list(G.nodes), dtype=jax.numpy.int32)
 
     direction_vectors = nodes - state.player_position
@@ -26,8 +29,11 @@ def explore_choose_node(env, G: nx.Graph, prev_pos: jax.numpy.ndarray = None, di
         direction_mask = jax.numpy.ones(direction_vectors.shape[0], dtype=bool)
 
     for cool_distance in range(dist, -1, -1):
-        indexes = jax.numpy.where(jax.numpy.logical_and(distances == cool_distance, direction_mask))[0]
-        if len(indexes) == 0: continue
+        indexes = jax.numpy.where(
+            jax.numpy.logical_and(distances == cool_distance, direction_mask)
+        )[0]
+        if len(indexes) == 0:
+            continue
         env.rng, rng = jax.random.split(env.rng)
         idx = jax.random.choice(rng, indexes)
         return nodes[idx]

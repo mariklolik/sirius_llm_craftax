@@ -15,21 +15,22 @@ class ActionAgent:
 
         with open("user_promts/action.txt") as file:
             action = file.read()
-            
+
         action = action.format(code, error)
         action = format_text_with_state(action, state)
         action = action.format(task, context, critique)
 
-        result = self.model.run([
-            {
-                "role": "system",
-                "text": action_template_system_promt,
-            },
-            {
-                "role": "user",
-                "text": action,
-            }
-        ])
+        result = self.model.run(
+            [
+                {
+                    "role": "system",
+                    "text": action_template_system_promt,
+                },
+                {
+                    "role": "user",
+                    "text": action,
+                },
+            ]
+        )
 
-        return result.alternatives[0].text.split('\n')
-    
+        return result.alternatives[0].text.split("\n")

@@ -20,15 +20,15 @@ def get_obs_mask(state: EnvState):
     floors, h, w = state.map.shape
     mask = jnp.zeros_like(state.map, dtype=jnp.int32)
     mask = mask.at[
-           state.player_level,
-           max(0, y - OBS_DIM[0] // 2) : min(h, y + OBS_DIM[0] // 2 + 1),
-           max(0, x - OBS_DIM[1] // 2) : min(w, x + OBS_DIM[1] // 2 + 1)
-           ].set(1)
+        state.player_level,
+        max(0, y - OBS_DIM[0] // 2) : min(h, y + OBS_DIM[0] // 2 + 1),
+        max(0, x - OBS_DIM[1] // 2) : min(w, x + OBS_DIM[1] // 2 + 1),
+    ].set(1)
 
     return mask
 
 
-def is_in_obs(state: EnvState, pos: jax.Array, mask = None, level=None):
+def is_in_obs(state: EnvState, pos: jax.Array, mask=None, level=None):
     """
     Checks if a given position is in the observation area of the player in the given state.
 
@@ -47,9 +47,7 @@ def is_in_obs(state: EnvState, pos: jax.Array, mask = None, level=None):
 
 
 def find_block_any(
-        state: EnvState,
-        block_type: BlockType,
-        level: Optional[int] = None
+    state: EnvState, block_type: BlockType, level: Optional[int] = None
 ):
     """
     Finds the coordinates of any block with the given ID in the observation area of the given state.
@@ -68,10 +66,9 @@ def find_block_any(
         return None
     return res[0]
 
+
 def find_block_all(
-        state: EnvState,
-        block_type: BlockType,
-        level: Optional[int] = None
+    state: EnvState, block_type: BlockType, level: Optional[int] = None
 ) -> jax.numpy.ndarray:
     """
     Finds all blocks with the given ID in the observation area of the given state.
@@ -89,13 +86,11 @@ def find_block_all(
     obs_mask = get_obs_mask(state)[level]
 
     res = jax.numpy.where(
-        jax.numpy.logical_and(
-            obs_mask,
-            state.map[level] == block_type.value
-        )
+        jax.numpy.logical_and(obs_mask, state.map[level] == block_type.value)
     )
 
     return jnp.stack(res, axis=1)
+
 
 # def pr(arr):
 #     for i in range(18, 32):
