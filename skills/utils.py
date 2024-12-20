@@ -11,10 +11,10 @@ class YandexEmbeddingModel:
         self.query_model = sdk.models.text_embeddings("query")
 
     def embed_documents(self, texts):
-        return [self.doc_model.run(t) for t in texts]
+        return [list(self.doc_model.run(t)) for t in texts]
 
     def embed_query(self, text):
-        return self.query_model.run(text)
+        return list(self.query_model.run(text))
 
 
 class SkillManager:
@@ -22,8 +22,7 @@ class SkillManager:
         emb_model = YandexEmbeddingModel(sdk)
         self.gpt = sdk.models.completions("yandexgpt")
         self.gpt = self.gpt.configure(temperature=0.0)
-        with open("skills/SkillDescriptorSystemPrompt.txt") as f:
-            
+        with open("skills/SkillDescriptorSystemPrompt.txt", encoding="utf-8") as f:
             self.system_prompt = f.read()
         self.db = Chroma(
             persist_directory=db_src, embedding_function=emb_model
@@ -40,7 +39,7 @@ class SkillManager:
         ]
         logger.info("Primitives spliting started")
         for file_name in files_with_functions:
-            with open("/../primitives/" + file_name) as f:
+            with open("primitives/" + file_name, encoding="utf-8") as f:
                 text = f.read()
                 funcs = self.split_functions(text)
                 for func in funcs:
