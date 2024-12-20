@@ -5,6 +5,8 @@ Here are some useful programs written with python.
 
 At each round of conversation, I will give you
 
+Code from the last round: {}
+Execution error: {}
 About Map:
     Map_blocks: {}
     Map_items: {}
@@ -21,13 +23,9 @@ About Player:
     Is_resting: {}
     inventory: {}
     achievement: {}
-Task:
-    Completed tasks so far: {}
-    Failed tasks that are too hard: {}
-
-Code from the last round: {}
-Execution error: {}
-Chat log: {}
+Task: {}
+Context: {}
+Critique: {}
 
 You should then respond to me with
 Explain (if applicable): Are there any steps missing in your plan? Why does the code not complete the task? What does the chat log and execution error imply?

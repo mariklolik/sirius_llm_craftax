@@ -20,11 +20,8 @@ About Player:
     Is_resting: {}
     inventory: {}
     achievement: {}
-Task:
-    Completed tasks so far: {}
-    Failed tasks that are too hard: {}
-    Task: {}
-    Context: {}
+Task: {}
+Context: {}
 
 
 You should only respond in JSON format as described below:
