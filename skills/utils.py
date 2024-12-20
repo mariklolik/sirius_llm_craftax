@@ -38,30 +38,39 @@ class SkillManager:
             "move_to_node_smart.py",
             "mine_block.py",
         ]
+        logger.info("Primitives spliting started")
         for file_name in files_with_functions:
             with open("/../primitives/" + file_name) as f:
                 text = f.read()
                 funcs = self.split_functions(text)
                 for func in funcs:
                     self.add_skill(func)
+        logger.info("Primitives spliting finished")
                     
 
     @staticmethod
     def split_functions(code: str):
-        lines = code.split("\n")
+        lines = code.split('\n')
         res = []
         i = 0
         while i < len(lines):
-            if lines[i][: min(3, len(lines[i]))] == "def":
-                func = lines[i] + "\n"
-                while i < len(lines):
-                    if lines[i][: min(4, len(lines[i]))] == " " * 4:
-                        func += lines[i] + "\n"
-                    else:
-                        break
+            if lines[i][:min(3, len(lines[i]))] == "def":
+                func = lines[i] + '\n'
+                while(True):
                     i += 1
+                    if i == len(lines):
+                        break
+                    if lines[i][:min(4, len(lines[i]))] == " " * 4\
+                        or (len(lines[i]) and lines[i][0] == ')')\
+                        or len(lines[i]) == 0:
+                        func += lines[i] + '\n'
+                    else:
+                        break 
                 res.append(func)
+            else:
+                i += 1
         return res
+
 
     def fetch_skills(self, target_task: str):
         docs = [
