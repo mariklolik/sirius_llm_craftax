@@ -1,6 +1,6 @@
 from agents.sdk import sdk
 from agents.formating import format_text_with_state
-
+import json
 
 class CriticAgent:
     def __init__(self):
@@ -14,8 +14,7 @@ class CriticAgent:
         with open("user_promts/critic.txt") as file:
             critic_user_promt = file.read()
 
-        critic_user_promt = format_text_with_state(critic_user_promt, state)
-        critic_user_promt = critic_user_promt.format(task, context)
+        critic_user_promt = format_text_with_state(critic_user_promt, state, task, context)
 
         result = self.model.run(
             [
@@ -29,5 +28,6 @@ class CriticAgent:
                 },
             ]
         )
+        data = json.loads(result.alternatives[0].text.replace("```", ''))
 
-        return result.alternatives[0].text
+        return bool(data['success']), data['critique']

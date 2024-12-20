@@ -27,24 +27,24 @@ class SkillManager:
         self.db = Chroma(
             persist_directory=db_src, embedding_function=emb_model
         )
-
-        files_with_functions = [
-            "simple_actions.py",
-            "checks.py",
-            "explore.py",
-            "explore_until.py",
-            "utils.py",
-            "move_to_node_smart.py",
-            "mine_block.py",
-        ]
-        logger.info("Primitives spliting started")
-        for file_name in files_with_functions:
-            with open("primitives/" + file_name, encoding="utf-8") as f:
-                text = f.read()
-                funcs = self.split_functions(text)
-                for func in funcs:
-                    self.add_skill(func)
-        logger.info("Primitives spliting finished")
+        if len(self.db) == 0:
+            files_with_functions = [
+                "simple_actions.py",
+                "checks.py",
+                "explore.py",
+                "explore_until.py",
+                "utils.py",
+                "move_to_node_smart.py",
+                "mine_block.py",
+            ]
+            logger.info("Primitives spliting started")
+            for file_name in files_with_functions:
+                with open("primitives/" + file_name, encoding="utf-8") as f:
+                    text = f.read()
+                    funcs = self.split_functions(text)
+                    for func in funcs:
+                        self.add_skill(func)
+            logger.info("Primitives spliting finished")
                     
 
     @staticmethod
@@ -75,7 +75,7 @@ class SkillManager:
         docs = [
             (text.page_content, text.metadata["code"])
             for text, sim in self.db.similarity_search_with_relevance_scores(
-                target_task, 5, score_threshold=0.5
+                target_task, 5, score_threshold=0.0
             )
         ]
         return docs

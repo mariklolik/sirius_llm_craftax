@@ -2,7 +2,7 @@ import jax
 import networkx as nx
 from craftax.craftax.craftax_state import EnvState
 
-from .move_to_node_smart import to_node
+from primitives.move_to_node_smart import to_node
 
 
 def explore_choose_node(

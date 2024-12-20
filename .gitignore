@@ -170,5 +170,7 @@ cython_debug/
 
 .idea/
 .pypirc
-skills/chroma_db/chroma.sqlite3
+skills/chroma_db
 
+#debug files
+logs/*

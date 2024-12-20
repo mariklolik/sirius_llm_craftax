@@ -1,10 +1,10 @@
 from agents.sdk import sdk
 from agents.formating import format_text_with_state
-
+import json
 
 class ActionAgent:
     def __init__(self):
-        model = sdk.models.completions("yandexgpt")
+        model = sdk.models.completions("yandexgpt-32k")
         self.model = model.configure(temperature=0.0)
 
     def generate_code(self, code, error, state, task, context, critique):
@@ -16,9 +16,7 @@ class ActionAgent:
         with open("user_promts/action.txt") as file:
             action = file.read()
 
-        action = action.format(code, error)
-        action = format_text_with_state(action, state)
-        action = action.format(task, context, critique)
+        action = format_text_with_state(action, state, code, error, task, context, critique)
 
         result = self.model.run(
             [
@@ -32,5 +30,7 @@ class ActionAgent:
                 },
             ]
         )
-
-        return result.alternatives[0].text.split("\n")
+        data = result.alternatives[0].text.replace("```", '')
+        
+        
+        return data

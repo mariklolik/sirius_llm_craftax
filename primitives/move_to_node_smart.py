@@ -5,8 +5,8 @@ import networkx as nx
 from craftax.craftax.constants import DIRECTIONS, BlockType, Action
 from craftax.craftax.craftax_state import EnvState
 
-from .utils import get_obs_mask, is_in_obs
-from .executor import executor
+from primitives.utils import get_obs_mask, is_in_obs
+from primitives.executor import executor
 
 DIRECTIONS_TO_ACTIONS = {
     (0, 0): Action.NOOP,

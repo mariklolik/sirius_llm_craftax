@@ -2,10 +2,10 @@ import logging
 
 from craftax.craftax.constants import BlockType
 
-from .explore_until import explore_until
-from .move_to_node_smart import move_to_pos
-from .simple_actions import act_DO
-from .utils import find_block_all
+from primitives.explore_until import explore_until
+from primitives.move_to_node_smart import move_to_pos
+from primitives.simple_actions import act_DO
+from primitives.utils import find_block_all
 
 logger = logging.getLogger()
 

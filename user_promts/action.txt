@@ -1,5 +1,3 @@
-Code from the last round: {}
-Execution error: {}
 About Map:
     Map_blocks: {}
     Map_items: {}
@@ -16,6 +14,8 @@ About Player:
     Is_resting: {}
     inventory: {}
     achievement: {}
+Code from the last round: {}
+Execution error: {}
 Task: {}
 Context: {}
 Critique: {}

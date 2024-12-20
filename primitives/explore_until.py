@@ -4,9 +4,9 @@ import typing
 import jax
 from craftax.craftax.constants import BlockType
 
-from .explore import explore_choose_node
-from .move_to_node_smart import gen_graph_smart, move_to_pos
-from .utils import find_block_any
+from primitives.explore import explore_choose_node
+from primitives.move_to_node_smart import gen_graph_smart, move_to_pos
+from primitives.utils import find_block_any
 from functools import partial
 
 logger = logging.getLogger()

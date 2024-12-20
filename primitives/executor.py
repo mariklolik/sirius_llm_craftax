@@ -1,13 +1,12 @@
 from craftax.craftax.constants import Action
 import os
 
-from .wrapper import SaveStateWrapper
 import logging
 
 logger = logging.getLogger("Executor")
 
 
-def executor(env: SaveStateWrapper, action_list: list[Action]):
+def executor(env, action_list: list[Action]):
     # append acton_list to actions.csv
     action_log_file = os.path.join(env.log_dir, "actions.txt")
     logger.info(f"acting: {action_list}")

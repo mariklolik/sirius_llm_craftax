@@ -5,7 +5,7 @@ import jax
 from PIL import Image
 from craftax.craftax.constants import Action
 
-from .wrapper import SaveStateWrapper
+from primitives.wrapper import SaveStateWrapper
 
 
 def process_environment_step(

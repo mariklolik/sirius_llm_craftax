@@ -5,8 +5,6 @@ Here are some useful programs written with python.
 
 At each round of conversation, I will give you
 
-Code from the last round: {}
-Execution error: {}
 About Map:
     Map_blocks: {}
     Map_items: {}
@@ -23,6 +21,8 @@ About Player:
     Is_resting: {}
     inventory: {}
     achievement: {}
+Code from the last round: {}
+Execution error: {}
 Task: {}
 Context: {}
 Critique: {}
@@ -45,6 +45,7 @@ Code:
     7) `maxDistance` should always be 5 among all axises. Do not cheat.
     8) Do not write infinite loops or recursive functions.
     9) Name your function in a meaningful way (can infer the task from the name).
+    10) RESPONSE ONLY WITH ONE FUNCTION USING PASSED PRIMITIVES
 
 You should only respond in the format as described below:
 RESPONSE FORMAT:

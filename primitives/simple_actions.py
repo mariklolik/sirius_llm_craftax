@@ -1,5 +1,5 @@
 from craftax.craftax.constants import Action
-from .executor import executor
+from primitives.executor import executor
 
 
 def act_NOOP(env):
