@@ -1,0 +1,19 @@
+About Map:
+    Map_blocks: {}
+    Map_items: {}
+    Map_light: {}
+About Player:
+    Player_position: {}
+    Player_health: {}
+    Player_hunger: {}
+    Player_drink: {}
+    Player_energy: {}
+    Player_level: {}
+    Player_mana: {}
+    Is_sleeping: {}
+    Is_resting: {}
+    inventory: {}
+    achievement: {}
+Task:
+    Completed tasks so far: {}
+    Failed tasks that are too hard: {}

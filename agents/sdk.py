@@ -4,7 +4,5 @@ from os import environ
 
 load_dotenv()
 
-folder_id = environ["folder_id"]
-auth = environ["auth"]
 
-sdk = YCloudML(folder_id=folder_id, auth=auth)
+sdk = YCloudML(folder_id=environ["folder_id"], auth=environ["auth"])

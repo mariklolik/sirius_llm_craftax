@@ -1,8 +1,9 @@
 from craftax.craftax_env import make_craftax_env_from_name
-from craftax.craftax.constants import Achievement, INTERMEDIATE_ACHIEVEMENTS, VERY_ADVANCED_ACHIEVEMENTS
-
-from jax.random import PRNGKey
-
+from craftax.craftax.constants import (
+    Achievement,
+    INTERMEDIATE_ACHIEVEMENTS,
+    VERY_ADVANCED_ACHIEVEMENTS,
+)
 from primitives.wrapper import SaveStateWrapper
 
 
@@ -24,12 +25,15 @@ def achievement_mapping(achievement_value):
     else:
         return 5
 
+
 def get_achievements(state):
     achievements = state.achievements
     info = {}
     sum_rewards = 0
     for achievement in Achievement:
-        name = ' '.join(achievement.name.capitalize().split('-'))
-        info[name] = int(achievements[achievement.value]) * achievement_mapping(achievement.value)
+        name = " ".join(achievement.name.capitalize().split("-"))
+        info[name] = int(
+            achievements[achievement.value]
+        ) * achievement_mapping(achievement.value)
         sum_rewards += info[name]
     return info, sum_rewards
