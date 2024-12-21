@@ -1,6 +1,8 @@
 from agents.sdk import sdk
 from agents.formating import format_text_with_state
 import json
+import logging
+logger = logging.getLogger("ActionAgent")
 
 class ActionAgent:
     def __init__(self):
@@ -30,6 +32,7 @@ class ActionAgent:
                 },
             ]
         )
+        logger.info(action)
         data = result.alternatives[0].text.replace("```", '')
         
         

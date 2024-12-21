@@ -9,10 +9,10 @@ def format_text_with_state(text: str, state, *args):
     map_width = len(map_blocks[0])
 
     # Calculate the boundaries of the 5x5 sub-map with edge case handling
-    start_x = max(0, player_x - 2)
-    start_y = max(0, player_y - 2)
-    end_x = min(map_width, player_x + 3)
-    end_y = min(map_height, player_y + 3)
+    start_x = max(0, player_x - 5)
+    start_y = max(0, player_y - 5)
+    end_x = min(map_width, player_x + 6)
+    end_y = min(map_height, player_y + 6)
 
     # Extract the 5x5 sub-map
     sub_map = [row[start_x:end_x] for row in map_blocks[start_y:end_y]]

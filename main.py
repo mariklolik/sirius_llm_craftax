@@ -10,6 +10,7 @@ from agents.critic_agent import CriticAgent
 from agents.curriculum_agent import CurriculumAgent
 from primitives.wrapper import SaveStateWrapper
 from craftax.craftax_env import make_craftax_env_from_name
+from primitives.visual import display_state, save_gif
 import os
 import importlib.util
 import sys
@@ -43,17 +44,26 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs")
 os.makedirs(log_dir, exist_ok=True)
 
-SEED = 0xBAD_5EED_B00B5
+SEED = 123
 
-
-def invoke_action(state, code):
+def invoke_action(env_now, code):
+    env = env_now
     global eval_context
-    code = "from primitives import * \n" + code
-    code = "\treturn env"
-    
+    code = "from primitives import * \n" + code + '\n'
+    funcs = SkillManager.split_functions(code)
+    if len(funcs) > 1:
+        return "You wrote more than 1 function. Write only one function."
+    if len(funcs) == 0:
+        return "You didn't write any functions. Write one function."
+    func = funcs[0]
+    func_name = func[4:func.find('(')] #def NAME(...)
+    code += func_name + "(env)"
     try:
-        func = eval(f"from path import func_name")
-        func(state)
+        exec(code, globals())
+        env = env_now
+        #exec with actions logging to visualize
+        exec(code, globals())
+        env_now = env
         return "No errors"
     except Exception as e:
         return f"thrown exception: {str(e)}"
@@ -75,7 +85,7 @@ if __name__ == "__main__":
     action_agent = ActionAgent()
     critic_agent = CriticAgent()
 
-    env = SaveStateWrapper(make_craftax_env_from_name("Craftax-Symbolic-v1", auto_reset=False), SEED, "logs/action.csv")
+    env = SaveStateWrapper(make_craftax_env_from_name("Craftax-Symbolic-v1", auto_reset=False), SEED, "logs")
     obs, state = env.reset()
 
     game_finished = False
@@ -95,7 +105,8 @@ if __name__ == "__main__":
             skills = skill_manager.fetch_skills(task)
             for i in range(4):
                 state = prev_state
-
+                display_state(state)
+                save_gif()
                 code = action_agent.generate_code(code, execution_errors, state, task, skills, critique)
                 execution_errors = invoke_action(state, code)
                 success, critique = critic_agent.check_task_success(
