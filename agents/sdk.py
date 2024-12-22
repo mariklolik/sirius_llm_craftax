@@ -22,8 +22,8 @@ class Run:
         file_path = os.path.join(self.directory, file_name)
 
         result = model.run(promt)
-        with open(file_path, 'w') as file:
-            file.write(promt)
+        with open(file_path, 'w', encoding="utf-8") as file:
+            file.write(str(promt))
             file.write("\n\nResult:\n")
             file.write(result.alternatives[0].text)
         

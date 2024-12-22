@@ -52,3 +52,9 @@ Code:
 You should only respond in the format as described below:
 RESPONSE FORMAT:
 {response_format}
+
+Good example:
+def place_table(env):
+    #Crafting table - important thing in Craftax. You need it when you want to craft item.
+    #To place block we need free space, therefore we check what type of blocks node forward us
+    block_type = 

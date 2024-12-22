@@ -51,7 +51,7 @@ def invoke_action(env, code):
     code = "from primitives import * \n" + code + '\n'
     funcs = SkillManager.split_functions(code)
     if len(funcs) > 1:
-        return "You wrote more than 1 function. Write only one function."
+        return "You wrote more than 1 function. Write only one function. If you will do that again you will die"
     if len(funcs) == 0:
         return "You didn't write any functions. Write one function."
     func = funcs[0]
@@ -78,8 +78,8 @@ if __name__ == "__main__":
 
     skill_manager = SkillManager("./skills/chroma_db", sdk)
     log_run_promts = Run()
-    curriculum_agent = CurriculumAgent(logs_run_promts)
-    action_agent = ActionAgent(logs_run_promts)
+    curriculum_agent = CurriculumAgent(log_run_promts)
+    action_agent = ActionAgent(log_run_promts)
     critic_agent = CriticAgent(log_run_promts)
 
     env = SaveStateWrapper(make_craftax_env_from_name("Craftax-Symbolic-v1", auto_reset=False), SEED, "logs")
@@ -91,10 +91,8 @@ if __name__ == "__main__":
         final_task = curriculum_agent.propose_next_task(
             state, exploration_progress
         )
-        #subtasks = curriculum_agent.task_decomposition(state, final_task)
-        print(final_task[1])
-        subtasks = [str(final_task[1])]
-        for task in subtasks:
+        subtasks = curriculum_agent.task_decomposition(state, final_task)
+        for task in [subtasks[0]]:
             code = None
             # environment_feedback = None
             execution_errors = None
