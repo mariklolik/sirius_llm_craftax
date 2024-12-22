@@ -70,7 +70,7 @@ if __name__ == "__main__":
     logger = logging.getLogger("main_logger")
     handler = logging.StreamHandler(sys.stdout)
     logger.addHandler(handler)
-
+ 
     with open(log_dir + "/actions.txt", "w") as f:
         pass
 
@@ -90,7 +90,9 @@ if __name__ == "__main__":
         final_task = curriculum_agent.propose_next_task(
             state, exploration_progress
         )
-        subtasks = curriculum_agent.task_decomposition(state, final_task)
+        #subtasks = curriculum_agent.task_decomposition(state, final_task)
+        print(final_task[1])
+        subtasks = [str(final_task[1])]
         for task in subtasks:
             code = None
             # environment_feedback = None

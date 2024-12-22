@@ -49,7 +49,6 @@ class CurriculumAgent:
             ]
         )
         result = result.alternatives[0].text.split("\n")
-        print(result)
         result = [i for i in result if i]
         reasoning = result[0]
         questions = []
