@@ -110,9 +110,16 @@ class CurriculumAgent:
         return reasoning, task
 
     def task_decomposition(self, state, task):
-
+        inventory = state.inventory.__dict__
+        inv = {}
+        for key, value in inventory.items():
+            value = value.tolist()
+            if isinstance(value, int):
+                if value > 0:
+                    inv[key] = value
+                    
         task_decomp_user_promt = self.task_decomp_user_promt.format(
-            state.inventory, task
+            inv, task
         )
 
         result = self.logs_run.run(self.model,

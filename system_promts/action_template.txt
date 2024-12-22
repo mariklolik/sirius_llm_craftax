@@ -141,6 +141,7 @@ Execution error: {}
 Task: {}
 Context: {}
 Critique: {}
+Enviroment_feedback: {}
 
 You should then respond to me with
 Code:

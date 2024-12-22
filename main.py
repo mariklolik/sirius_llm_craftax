@@ -44,7 +44,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs")
 os.makedirs(log_dir, exist_ok=True)
 
-SEED = 0xAB0BA
+SEED = 123
 
 def invoke_action(env, code):
     global eval_context
@@ -91,20 +91,19 @@ if __name__ == "__main__":
             state, exploration_progress
         )
         subtasks = curriculum_agent.task_decomposition(state, final_task)
-        subtasks = curriculum_agent.task_decomposition(state, subtasks[0])
-        task = subtasks[0]
+        task = "mine 3 wood and create table and then craft on table wooden pickaxe"
         code = None
-        # environment_feedback = None
+        environment_feedback = None
         execution_errors = None
         critique = None
         success = False
-        prev_state = env.saved_state
         skills = skill_manager.fetch_skills(task)
         for i in range(4):
-            state = prev_state
-            code = action_agent.generate_code(code, execution_errors, state, task, skills, critique)
+            state = env.saved_state
+            code = action_agent.generate_code(code, execution_errors, state, task, skills, critique, environment_feedback)
             execution_errors = invoke_action(state, code)
-            success, critique = critic_agent.check_task_success(
+            state = env.saved_state
+            environment_feedback, success, critique = critic_agent.check_task_success(
                 state, task, skills
             )
             if success:

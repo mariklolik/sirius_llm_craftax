@@ -18,9 +18,9 @@ class ActionAgent:
         with open("user_promts/action_user_promt.txt") as file:
             self.action = file.read()
 
-    def generate_code(self, code, error, state, task, context, critique):
+    def generate_code(self, code, error, state, task, context, critique, env_fid):
 
-        action = format_text_with_state(self.action, state, code, error, task, context, critique)
+        action = format_text_with_state(self.action, state, code, error, task, context, critique, env_fid)
 
         result = self.logs_run.run(self.model, 
             [

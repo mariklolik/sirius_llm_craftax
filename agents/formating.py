@@ -45,11 +45,14 @@ def format_text_with_state(text: str, state, *args):
     player_mana = state.player_mana
     is_sleeping = state.is_sleeping
     is_resting = state.is_resting
-    inventory = state.inventory
-    inv = []
-    for i in inventory:
-        if i > 0:
-            inv.append(i.tolist())
+    inventory = state.inventory.__dict__
+    inv = {}
+    for key, value in inventory.items():
+        value = value.tolist()
+        if isinstance(value, int):
+            if value > 0:
+                inv[key] = value
+    print(inv)
     text = text.format(
         map_blocks,
         coord_ladder_down, 
@@ -64,7 +67,7 @@ def format_text_with_state(text: str, state, *args):
         player_mana,
         is_sleeping,
         is_resting,
-        inventory,
+        inv,
         *args
     )
     return text
