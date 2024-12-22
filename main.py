@@ -10,7 +10,7 @@ from agents.critic_agent import CriticAgent
 from agents.curriculum_agent import CurriculumAgent
 from primitives.wrapper import SaveStateWrapper
 from craftax.craftax_env import make_craftax_env_from_name
-from primitives.visual import display_state, save_gif
+import primitives.visual as visual
 import os
 import importlib.util
 import sys
@@ -46,8 +46,7 @@ os.makedirs(log_dir, exist_ok=True)
 
 SEED = 123
 
-def invoke_action(env_now, code):
-    env = env_now
+def invoke_action(env, code):
     global eval_context
     code = "from primitives import * \n" + code + '\n'
     funcs = SkillManager.split_functions(code)
@@ -60,10 +59,7 @@ def invoke_action(env_now, code):
     code += func_name + "(env)"
     try:
         exec(code, globals())
-        env = env_now
-        #exec with actions logging to visualize
-        exec(code, globals())
-        env_now = env
+        logger.info("Function executed without errors")
         return "No errors"
     except Exception as e:
         return f"thrown exception: {str(e)}"
@@ -87,7 +83,7 @@ if __name__ == "__main__":
 
     env = SaveStateWrapper(make_craftax_env_from_name("Craftax-Symbolic-v1", auto_reset=False), SEED, "logs")
     obs, state = env.reset()
-
+    #visual.visualise_actions(env, "logs/actions.txt")
     game_finished = False
     while not game_finished:
         exploration_progress = curriculum_agent.get_exploration_progress(state)
@@ -105,8 +101,6 @@ if __name__ == "__main__":
             skills = skill_manager.fetch_skills(task)
             for i in range(4):
                 state = prev_state
-                display_state(state)
-                save_gif()
                 code = action_agent.generate_code(code, execution_errors, state, task, skills, critique)
                 execution_errors = invoke_action(state, code)
                 success, critique = critic_agent.check_task_success(

@@ -32,7 +32,6 @@ class ActionAgent:
                 },
             ]
         )
-        logger.info(action)
         data = result.alternatives[0].text.replace("```", '')
         
         
