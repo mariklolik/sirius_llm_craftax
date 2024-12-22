@@ -10,7 +10,7 @@ class CurriculumAgent:
         self.completed_tasks = []
         self.failed_tasks = []
         self.logs_run = logs_run
-        with open("system_promts/tutorial.txt") as file:
+        with open("system_promts/tutorial.txt", encoding="utf-8") as file:
             self.tutorial = file.read()
         with open("system_promts/curriculum_qa_step1_ask_questions.txt") as file:
             self.qa_step_1_promt_system_promt = file.read()
@@ -48,8 +48,8 @@ class CurriculumAgent:
                 },
             ]
         )
-
         result = result.alternatives[0].text.split("\n")
+        print(result)
         result = [i for i in result if i]
         reasoning = result[0]
         questions = []

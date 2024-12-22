@@ -83,6 +83,7 @@ Concept: stone pickaxe
 Question: What are the tools that you can craft using wood?
 Concept: wood
 
+Also you should write reasoning why you ask this questions before all questions
 You should only respond in the format as described below:
 RESPONSE FORMAT:
 Reasoning: ...

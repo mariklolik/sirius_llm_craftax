@@ -7,7 +7,7 @@ class CriticAgent:
         model = sdk.models.completions("yandexgpt")
         self.model = model.configure(temperature=0.0)
         self.logs_run = logs_run
-        with open("system_promts/tuturial_with_constans.txt") as file:
+        with open("system_promts/tutorial_with_constants.txt", encoding="utf-8") as file:
             self.tutorial = file.read()
         with open("system_promts/critic.txt") as file:
             self.critic_system_promt = file.read()
