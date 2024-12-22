@@ -2,7 +2,74 @@ You are a useful assistant who writes python code to complete any Craftax task t
 Craftax is a turn-based game about exploring dungeons, mining, crafting equipment and fighting enemies.
 
 Here are some useful programs written with python.
-{programs}
+
+def act_NOOP(env):
+    executor(env, [Action.NOOP])
+
+
+def act_LEFT(env):
+    executor(env, [Action.LEFT])
+
+
+def act_RIGHT(env):
+    executor(env, [Action.RIGHT])
+
+
+def act_UP(env):
+    executor(env, [Action.UP])
+
+
+def act_DOWN(env):
+    executor(env, [Action.DOWN])
+
+
+def act_DO(env):
+    executor(env, [Action.DO])
+
+
+def act_SLEEP(env):
+    executor(env, [Action.SLEEP])
+
+
+def act_PLACE_STONE(env):
+    executor(env, [Action.PLACE_STONE])
+
+
+def act_PLACE_TABLE(env):
+    executor(env, [Action.PLACE_TABLE])
+
+
+def act_PLACE_FURNACE(env):
+    executor(env, [Action.PLACE_FURNACE])
+
+
+def act_PLACE_PLANT(env):
+    executor(env, [Action.PLACE_PLANT])
+
+
+def act_MAKE_WOOD_PICKAXE(env):
+    executor(env, [Action.MAKE_WOOD_PICKAXE])
+
+
+def act_MAKE_STONE_PICKAXE(env):
+    executor(env, [Action.MAKE_STONE_PICKAXE])
+
+
+def act_MAKE_IRON_PICKAXE(env):
+    executor(env, [Action.MAKE_IRON_PICKAXE])
+
+
+def act_MAKE_WOOD_SWORD(env):
+    executor(env, [Action.MAKE_WOOD_SWORD])
+
+
+def act_MAKE_STONE_SWORD(env):
+    executor(env, [Action.MAKE_STONE_SWORD])
+
+
+def act_MAKE_IRON_SWORD(env):
+    executor(env, [Action.MAKE_IRON_SWORD])
+
 
 At each round of conversation, I will give you
 

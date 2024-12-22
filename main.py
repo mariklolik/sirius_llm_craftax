@@ -92,37 +92,39 @@ if __name__ == "__main__":
             state, exploration_progress
         )
         subtasks = curriculum_agent.task_decomposition(state, final_task)
-        for task in [subtasks[0]]:
-            code = None
-            # environment_feedback = None
-            execution_errors = None
-            critique = None
-            success = False
-            prev_state = env.saved_state
-            skills = skill_manager.fetch_skills(task)
-            for i in range(4):
-                state = prev_state
-                code = action_agent.generate_code(code, execution_errors, state, task, skills, critique)
-                execution_errors = invoke_action(state, code)
-                success, critique = critic_agent.check_task_success(
-                    state, task, skills
-                )
-                if success:
-                    logger.info(f"{task} passed!")
-                    break
-                else:
-                    logger.info(f"{task} not passed!")
-                directory = os.path.join('./logs', task)
-                path = os.path.join(f'./logs/{task}', f"{i}.py")
-                os.makedirs(directory, exist_ok=True)
-                with open(path, "w", encoding="utf-8") as file:
-                    file.write(code)
-                    file.write(execution_errors)
+        subtasks = curriculum_agent.task_decomposition(state, subtasks[0])
+        subtasks = curriculum_agent.task_decomposition(state, subtasks[0])
+        task = subtasks[0]
+        code = None
+        # environment_feedback = None
+        execution_errors = None
+        critique = None
+        success = False
+        prev_state = env.saved_state
+        skills = skill_manager.fetch_skills(task)
+        for i in range(4):
+            state = prev_state
+            code = action_agent.generate_code(code, execution_errors, state, task, skills, critique)
+            execution_errors = invoke_action(state, code)
+            success, critique = critic_agent.check_task_success(
+                state, task, skills
+            )
             if success:
-                skill_manager.add_skill(code)
-                curriculum_agent.add_completed_task(task)
+                logger.info(f"{task} passed!")
+                break
             else:
-                curriculum_agent.add_failed_task(task)
+                logger.info(f"{task} not passed!")
+            directory = os.path.join('./logs', task)
+            path = os.path.join(f'./logs/{task}', f"{i}.py")
+            os.makedirs(directory, exist_ok=True)
+            with open(path, "w", encoding="utf-8") as file:
+                file.write(code)
+                file.write(execution_errors)
+        if success:
+            skill_manager.add_skill(code)
+            curriculum_agent.add_completed_task(task)
+        else:
+            curriculum_agent.add_failed_task(task)
 
     logger.info(get_achievements(state))
     logger.info("Finished")
