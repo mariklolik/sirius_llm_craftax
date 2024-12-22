@@ -29,11 +29,6 @@ def check_inventory_diamond(env):
     return env.saved_state.inventory.diamond
 
 
-def check_inventory_sapling(env):
-    """Returns the number of saplings in the inventory."""
-    return env.saved_state.inventory.sapling
-
-
 def check_inventory_bow(env):
     """Returns the number of bows in the inventory."""
     return env.saved_state.inventory.bow

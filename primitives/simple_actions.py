@@ -33,18 +33,11 @@ def act_SLEEP(env):
 def act_PLACE_STONE(env):
     executor(env, [Action.PLACE_STONE])
 
-
 def act_PLACE_TABLE(env):
     executor(env, [Action.PLACE_TABLE])
 
-
 def act_PLACE_FURNACE(env):
     executor(env, [Action.PLACE_FURNACE])
-
-
-def act_PLACE_PLANT(env):
-    executor(env, [Action.PLACE_PLANT])
-
 
 def act_MAKE_WOOD_PICKAXE(env):
     executor(env, [Action.MAKE_WOOD_PICKAXE])
@@ -82,93 +75,120 @@ def act_ASCEND(env):
     executor(env, [Action.ASCEND])
 
 
-def act_MAKE_DIAMOND_PICKAXE(env):
-    executor(env, [Action.MAKE_DIAMOND_PICKAXE])
-
-
-def act_MAKE_DIAMOND_SWORD(env):
-    executor(env, [Action.MAKE_DIAMOND_SWORD])
-
-
 def act_MAKE_IRON_ARMOUR(env):
     executor(env, [Action.MAKE_IRON_ARMOUR])
 
+from craftax.craftax.constants import DIRECTIONS, BlockType
+from craftax.craftax.craftax_state import EnvState
 
-def act_MAKE_DIAMOND_ARMOUR(env):
-    executor(env, [Action.MAKE_DIAMOND_ARMOUR])
-
-
-def act_SHOOT_ARROW(env):
-    executor(env, [Action.SHOOT_ARROW])
+## ITEMS
 
 
-def act_MAKE_ARROW(env):
-    executor(env, [Action.MAKE_ARROW])
+def check_inventory_wood(env):
+    """Returns the number of wood in the inventory."""
+    return env.saved_state.inventory.wood
 
 
-def act_CAST_FIREBALL(env):
-    executor(env, [Action.CAST_FIREBALL])
+def check_inventory_stone(env):
+    """Returns the number of stone in the inventory."""
+    return env.saved_state.inventory.stone
 
 
-def act_CAST_ICEBALL(env):
-    executor(env, [Action.CAST_ICEBALL])
+def check_inventory_coal(env):
+    """Returns the number of coal in the inventory."""
+    return env.saved_state.inventory.coal
 
 
-def act_PLACE_TORCH(env):
-    executor(env, [Action.PLACE_TORCH])
+def check_inventory_iron(env):
+    """Returns the number of iron in the inventory."""
+    return env.saved_state.inventory.iron
 
 
-def act_DRINK_POTION_RED(env):
-    executor(env, [Action.DRINK_POTION_RED])
+def check_inventory_diamond(env):
+    """Returns the number of diamonds in the inventory."""
+    return env.saved_state.inventory.diamond
 
 
-def act_DRINK_POTION_GREEN(env):
-    executor(env, [Action.DRINK_POTION_GREEN])
+def check_inventory_bow(env):
+    """Returns the number of bows in the inventory."""
+    return env.saved_state.inventory.bow
 
 
-def act_DRINK_POTION_BLUE(env):
-    executor(env, [Action.DRINK_POTION_BLUE])
+def check_inventory_arrows(env):
+    """Returns the number of arrows in the inventory."""
+    return env.saved_state.inventory.arrows
 
 
-def act_DRINK_POTION_PINK(env):
-    executor(env, [Action.DRINK_POTION_PINK])
+def check_inventory_torches(env):
+    """Returns the number of torches in the inventory."""
+    return env.saved_state.inventory.torches
 
 
-def act_DRINK_POTION_CYAN(env):
-    executor(env, [Action.DRINK_POTION_CYAN])
+def check_inventory_ruby(env):
+    """Returns the number of rubies in the inventory."""
+    return env.saved_state.inventory.ruby
 
 
-def act_DRINK_POTION_YELLOW(env):
-    executor(env, [Action.DRINK_POTION_YELLOW])
+def check_inventory_sapphire(env):
+    """Returns the number of sapphires in the inventory."""
+    return env.saved_state.inventory.sapphire
 
 
-def act_READ_BOOK(env):
-    executor(env, [Action.READ_BOOK])
+def check_inventory_books(env):
+    """Returns the number of books in the inventory."""
+    return env.saved_state.inventory.books
 
 
-def act_ENCHANT_SWORD(env):
-    executor(env, [Action.ENCHANT_SWORD])
+## PICKAXES
 
 
-def act_ENCHANT_ARMOUR(env):
-    executor(env, [Action.ENCHANT_ARMOUR])
+def check_inventory_wood_pickaxe(env) -> bool:
+    """Returns True if the player has a wood pickaxe or better in the inventory, False otherwise."""
+    return env.saved_state.inventory.pickaxe >= 1
 
 
-def act_MAKE_TORCH(env):
-    executor(env, [Action.MAKE_TORCH])
+def check_inventory_stone_pickaxe(env) -> bool:
+    """Returns True if the player has a stone pickaxe or better in the inventory, False otherwise."""
+    return env.saved_state.inventory.pickaxe >= 2
 
 
-def act_LEVEL_UP_DEXTERITY(env):
-    executor(env, [Action.LEVEL_UP_DEXTERITY])
+def check_inventory_iron_pickaxe(env) -> bool:
+    """Returns True if the player has a iron pickaxe or better in the inventory, False otherwise."""
+    return env.saved_state.inventory.pickaxe >= 3
 
 
-def act_LEVEL_UP_STRENGTH(env):
-    executor(env, [Action.LEVEL_UP_STRENGTH])
+def check_inventory_diamond_pickaxe(env) -> bool:
+    """Returns True if the player has a diamond pickaxe or better in the inventory, False otherwise."""
+    return env.saved_state.inventory.pickaxe >= 4
 
 
-def act_LEVEL_UP_INTELLIGENCE(env):
-    executor(env, [Action.LEVEL_UP_INTELLIGENCE])
+## SWORDS
 
 
-def act_ENCHANT_BOW(env):
-    executor(env, [Action.ENCHANT_BOW])
+def check_inventory_wood_sword(env) -> bool:
+    """Returns True if the player has a wood sword or better in the inventory, False otherwise."""
+    return env.saved_state.inventory.sword >= 1
+
+
+def check_inventory_stone_sword(env) -> bool:
+    """Returns True if the player has a stone sword or better in the inventory, False otherwise."""
+    return env.saved_state.inventory.sword >= 2
+
+
+def check_inventory_iron_sword(env) -> bool:
+    """Returns True if the player has a iron sword or better in the inventory, False otherwise."""
+    return env.saved_state.inventory.sword >= 3
+
+
+def check_inventory_diamond_sword(env) -> bool:
+    """Returns True if the player has a diamond sword or better in the inventory, False otherwise."""
+    return env.saved_state.inventory.sword >= 4
+
+
+## BLOCK ON MAP
+
+
+def check_forward_block(env) -> BlockType:
+    state: EnvState = env.saved_state
+    pos = state.player_position + DIRECTIONS[state.player_direction]
+    return BlockType(state.map[state.player_level][pos[0], pos[1]])

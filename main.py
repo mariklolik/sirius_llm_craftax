@@ -44,7 +44,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs")
 os.makedirs(log_dir, exist_ok=True)
 
-SEED = 123
+SEED = 0xAB0BA
 
 def invoke_action(env, code):
     global eval_context
@@ -62,7 +62,7 @@ def invoke_action(env, code):
         logger.info("Function executed without errors")
         return "No errors"
     except Exception as e:
-        return f"thrown exception: {str(e)}"
+        return f"thrown exception: {str(e)}. Fix this or you will die."
 
 
 if __name__ == "__main__":
@@ -84,7 +84,6 @@ if __name__ == "__main__":
 
     env = SaveStateWrapper(make_craftax_env_from_name("Craftax-Symbolic-v1", auto_reset=False), SEED, "logs")
     obs, state = env.reset()
-    #visual.visualise_actions(env, "logs/actions.txt")
     game_finished = False
     while not game_finished:
         exploration_progress = curriculum_agent.get_exploration_progress(state)
@@ -93,7 +92,6 @@ if __name__ == "__main__":
         )
         subtasks = curriculum_agent.task_decomposition(state, final_task)
         subtasks = curriculum_agent.task_decomposition(state, subtasks[0])
-        subtasks = curriculum_agent.task_decomposition(state, subtasks[0])
         task = subtasks[0]
         code = None
         # environment_feedback = None
@@ -101,7 +99,7 @@ if __name__ == "__main__":
         critique = None
         success = False
         prev_state = env.saved_state
-        skills = skill_manager.fetch_skills(task)
+        skills = []
         for i in range(4):
             state = prev_state
             code = action_agent.generate_code(code, execution_errors, state, task, skills, critique)

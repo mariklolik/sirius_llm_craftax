@@ -10,7 +10,7 @@ from primitives.utils import find_block_all
 logger = logging.getLogger()
 
 
-def mine_block(
+def find_and_mine_block(
     env,
     block_type: BlockType,
     count: int = 1,
