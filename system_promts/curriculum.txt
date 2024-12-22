@@ -11,8 +11,8 @@ Answer: ...
 
 About Map:
     Map_blocks: {}
-    Map_items: {}
-    Map_light: {}
+    Сoordinate_ladder_down: {} {}
+    Сoordinate_ladder_up: {}
 About Player:
     Player_position: {}
     Player_health: {}
@@ -24,7 +24,6 @@ About Player:
     Is_sleeping: {}
     Is_resting: {}
     inventory: {}
-    achievement: {}
 Task:
     Completed tasks so far: {}
     Failed tasks that are too hard: {}

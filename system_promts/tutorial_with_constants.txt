@@ -80,3 +80,89 @@ Craftax — это игра об исследовании подземелий, 
 Резюмирую:
 Нужно выполнять вышеописанный план, одновременно следя за своими жизненно важными показателями. Если мало здоровья или мало энергии, нужно создать безопасную зону, отгородив себя каменными стенами и восстановиться. Если мало сытости, нужно найти ближайшее мирное существо и убить его, чтобы восполнить сытость. Если мало воды, нужно пойти к ближайшему источнику и выпить воду.
 
+
+Это номера действий, передавая которые ты будешь делать определнное действие
+Действия:
+    Ничего: 0
+    Влево: 1
+    Вправо: 2
+    Вверх: 3
+    Вниз: 4
+    Сделать, ударить, попить:  5
+    Поспать: 6
+    Поставить камень: 7
+    Поставить стол: 8
+    PLACE_FURNACE = 9
+    PLACE_PLANT = 10
+    Сделать деревянную кирку: 11
+    Сделать каменную кирку: 12
+    Сделать железную кирку: = 13
+    Сделать деревянный меч: = 14
+    Сделать каменный меч: = 15
+    Сделать железный меч = 16
+    REST = 17
+    DESCEND = 18
+    ASCEND = 19
+    MAKE_DIAMOND_PICKAXE = 20
+    MAKE_DIAMOND_SWORD = 21
+    MAKE_IRON_ARMOUR = 22
+    MAKE_DIAMOND_ARMOUR = 23
+    SHOOT_ARROW = 24
+    MAKE_ARROW = 25
+    CAST_FIREBALL = 26
+    CAST_ICEBALL = 27
+    PLACE_TORCH = 28
+    DRINK_POTION_RED = 29
+    DRINK_POTION_GREEN = 30
+    DRINK_POTION_BLUE = 31
+    DRINK_POTION_PINK = 32
+    DRINK_POTION_CYAN = 33
+    DRINK_POTION_YELLOW = 34
+    READ_BOOK = 35
+    ENCHANT_SWORD = 36
+    ENCHANT_ARMOUR = 37
+    Сделать факел: 38
+    LEVEL_UP_DEXTERITY = 39
+    LEVEL_UP_STRENGTH = 40
+    LEVEL_UP_INTELLIGENCE = 41
+    ENCHANT_BOW = 42
+
+BlockType:
+    INVALID = 0
+    OUT_OF_BOUNDS = 1
+    GRASS = 2
+    WATER = 3
+    STONE = 4
+    TREE = 5
+    WOOD = 6
+    PATH = 7
+    COAL = 8
+    IRON = 9
+    DIAMOND = 10
+    CRAFTING_TABLE = 11
+    FURNACE = 12
+    SAND = 13
+    LAVA = 14
+    PLANT = 15
+    RIPE_PLANT = 16
+    WALL = 17
+    DARKNESS = 18
+    WALL_MOSS = 19
+    STALAGMITE = 20
+    SAPPHIRE = 21
+    RUBY = 22
+    CHEST = 23
+    FOUNTAIN = 24
+    FIRE_GRASS = 25
+    ICE_GRASS = 26
+    GRAVEL = 27
+    FIRE_TREE = 28
+    ICE_SHRUB = 29
+    ENCHANTMENT_TABLE_FIRE = 30
+    ENCHANTMENT_TABLE_ICE = 31
+    NECROMANCER = 32
+    GRAVE = 33
+    GRAVE2 = 34
+    GRAVE3 = 35
+    NECROMANCER_VULNERABLE = 36
+

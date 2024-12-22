@@ -10,22 +10,37 @@ class CurriculumAgent:
         self.completed_tasks = []
         self.failed_tasks = []
 
+        with open("system_promts/tutorial.txt") as file:
+            self.tutorial = file.read()
+        with open("system_promts/curriculum_qa_step1_ask_questions.txt") as file:
+            self.qa_step_1_promt_system_promt = file.read()
+        with open("user_promts/curriculum_qa_step1.txt") as file:
+            self.qa_step_1_promt = file.read()
+
+        with open("system_promts/curriculum_qa_step2_answer_questions.txt") as file:
+            self.qa_step_2_promt_system_promt = file.read()
+        with open("user_promts/curriculum_qa_step2.txt") as file:
+            self.qa_step_2_promt = file.read()
+
+        with open("system_promts/curriculum.txt") as file:
+            self.curriculum_system_promt = file.read()
+        with open("user_promts/curriculum.txt") as file:
+            self.curriculum_user_promt = file.read()
+        
+        with open("system_promts/curriculum_task_decomposition.txt") as file:
+            self.task_decomp_system_promt = file.read()
+        with open("user_promts/curriculum_task_decomposition.txt") as file:
+            self.task_decomp_user_promt = file.read()
+
     def get_exploration_progress(self, state):
 
-        with open(
-            "system_promts/curriculum_qa_step1_ask_questions.txt"
-        ) as file:
-            qa_step_1_promt_system_promt = file.read()
-        with open("user_promts/curriculum_qa_step1.txt") as file:
-            qa_step_1_promt = file.read()
-
-        user_promt = format_text_with_state(qa_step_1_promt, state, self.completed_tasks, self.failed_tasks)
+        user_promt = format_text_with_state(self.qa_step_1_promt, state, self.completed_tasks, self.failed_tasks)
 
         result = self.model.run(
             [
                 {
                     "role": "system",
-                    "text": qa_step_1_promt_system_promt,
+                    "text": self.tutorial + self.qa_step_1_promt_system_promt,
                 },
                 {
                     "role": "user",
@@ -44,24 +59,17 @@ class CurriculumAgent:
                 questions.append(i)
             else:
                 concepts.append(i)
-        
-        with open(
-            "system_promts/curriculum_qa_step2_answer_questions.txt"
-        ) as file:
-            qa_step_2_promt_system_promt = file.read()
-        with open("user_promts/curriculum_qa_step2.txt") as file:
-            qa_step_2_promt = file.read()
 
         exploration_progress = []
 
         for i in range(len(questions)):
-            user_promt = qa_step_2_promt.format(questions[i], concepts[i])
+            user_promt = self.qa_step_2_promt.format(questions[i], concepts[i])
 
             result = self.model.run(
                 [
                     {
                         "role": "system",
-                        "text": qa_step_2_promt_system_promt,
+                        "text": self.tutorial + self.qa_step_2_promt_system_promt,
                     },
                     {
                         "role": "user",
@@ -77,12 +85,8 @@ class CurriculumAgent:
         return exploration_progress
 
     def propose_next_task(self, state, exploration_progress):
-        with open("system_promts/curriculum.txt") as file:
-            curriculum_system_promt = file.read()
-        with open("user_promts/curriculum.txt") as file:
-            curriculum_user_promt = file.read()
         curriculum_user_promt = format_text_with_state(
-            curriculum_user_promt, state, self.completed_tasks, self.failed_tasks
+            self.curriculum_user_promt, state, self.completed_tasks, self.failed_tasks
         )
 
         start_promt = ""
@@ -93,7 +97,7 @@ class CurriculumAgent:
             [
                 {
                     "role": "system",
-                    "text": curriculum_system_promt,
+                    "text": self.tutorial + self.curriculum_system_promt,
                 },
                 {
                     "role": "user",
@@ -107,12 +111,8 @@ class CurriculumAgent:
         return reasoning, task
 
     def task_decomposition(self, state, task):
-        with open("system_promts/curriculum_task_decomposition.txt") as file:
-            task_decomp_system_promt = file.read()
-        with open("user_promts/curriculum_task_decomposition.txt") as file:
-            task_decomp_user_promt = file.read()
 
-        task_decomp_user_promt = task_decomp_user_promt.format(
+        task_decomp_user_promt = self.task_decomp_user_promt.format(
             state.inventory, task
         )
 
@@ -120,7 +120,7 @@ class CurriculumAgent:
             [
                 {
                     "role": "system",
-                    "text": task_decomp_system_promt,
+                    "text": self.tutorial + self.task_decomp_system_promt,
                 },
                 {
                     "role": "user",

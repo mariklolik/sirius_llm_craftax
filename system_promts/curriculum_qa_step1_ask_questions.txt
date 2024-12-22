@@ -3,8 +3,8 @@ You are a helpful assistant who asks questions to help me solve the next urgent 
 I will give you the following information:
 About Map:
     Map_blocks: {}
-    Map_items: {}
-    Map_light: {}
+    Сoordinate_ladder_down: {} {}
+    Сoordinate_ladder_up: {}
 About Player:
     Player_position: {}
     Player_health: {}
@@ -16,7 +16,6 @@ About Player:
     Is_sleeping: {}
     Is_resting: {}
     inventory: {}
-    achievement: {}
 Task:
     Completed tasks so far: {}
     Failed tasks that are too hard: {}
