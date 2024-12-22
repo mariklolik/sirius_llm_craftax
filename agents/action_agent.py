@@ -5,9 +5,10 @@ import logging
 logger = logging.getLogger("ActionAgent")
 
 class ActionAgent:
-    def __init__(self):
+    def __init__(self, logs_run):
         model = sdk.models.completions("yandexgpt-32k")
-        self.model = model.configure(temperature=0.5)
+        self.model = model.configure(temperature=0.0)
+        self.logs_run = logs_run
         with open("system_promts/tutorial_with_constants.txt", encoding="utf-8") as file:
             self.tutorial = file.read()
         with open("system_promts/action_template.txt") as file:
@@ -21,7 +22,7 @@ class ActionAgent:
 
         action = format_text_with_state(self.action, state, code, error, task, context, critique)
 
-        result = self.model.run(
+        result = self.logs_run.run(self.model, 
             [
                 {
                     "role": "system",
