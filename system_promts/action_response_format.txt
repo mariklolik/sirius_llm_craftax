@@ -1,5 +1,5 @@
 ```python
-// only main function no helper functions and other code or commentaries
+// only one function no helper functions and other code or commentaries
 def yourMainFunctionName(env):
   // ...
 ```
