@@ -10,6 +10,7 @@ from agents.critic_agent import CriticAgent
 from agents.curriculum_agent import CurriculumAgent
 from primitives.wrapper import SaveStateWrapper
 from craftax.craftax_env import make_craftax_env_from_name
+import primitives.visual as visual
 import os
 import importlib.util
 import sys
@@ -43,17 +44,22 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs")
 os.makedirs(log_dir, exist_ok=True)
 
-SEED = 0xBAD_5EED_B00B5
+SEED = 123
 
-
-def invoke_action(state, code):
+def invoke_action(env, code):
     global eval_context
-    code = "from primitives import * \n" + code
-    code = "\treturn env"
-    
+    code = "from primitives import * \n" + code + '\n'
+    funcs = SkillManager.split_functions(code)
+    if len(funcs) > 1:
+        return "You wrote more than 1 function. Write only one function."
+    if len(funcs) == 0:
+        return "You didn't write any functions. Write one function."
+    func = funcs[0]
+    func_name = func[4:func.find('(')] #def NAME(...)
+    code += func_name + "(env)"
     try:
-        func = eval(f"from path import func_name")
-        func(state)
+        exec(code, globals())
+        logger.info("Function executed without errors")
         return "No errors"
     except Exception as e:
         return f"thrown exception: {str(e)}"
@@ -75,9 +81,9 @@ if __name__ == "__main__":
     action_agent = ActionAgent()
     critic_agent = CriticAgent()
 
-    env = SaveStateWrapper(make_craftax_env_from_name("Craftax-Symbolic-v1", auto_reset=False), SEED, "logs/action.csv")
+    env = SaveStateWrapper(make_craftax_env_from_name("Craftax-Symbolic-v1", auto_reset=False), SEED, "logs")
     obs, state = env.reset()
-
+    #visual.visualise_actions(env, "logs/actions.txt")
     game_finished = False
     while not game_finished:
         exploration_progress = curriculum_agent.get_exploration_progress(state)
@@ -95,7 +101,6 @@ if __name__ == "__main__":
             skills = skill_manager.fetch_skills(task)
             for i in range(4):
                 state = prev_state
-
                 code = action_agent.generate_code(code, execution_errors, state, task, skills, critique)
                 execution_errors = invoke_action(state, code)
                 success, critique = critic_agent.check_task_success(

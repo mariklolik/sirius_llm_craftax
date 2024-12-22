@@ -15,3 +15,5 @@ msgpack
 seaborn
 chromadb
 black
+IPython
+pillow
