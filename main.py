@@ -4,7 +4,7 @@ import os
 
 from skills.utils import SkillManager
 from game import create_env, get_achievements
-from agents.sdk import sdk
+from agents.sdk import sdk, Run
 from agents.action_agent import ActionAgent
 from agents.critic_agent import CriticAgent
 from agents.curriculum_agent import CurriculumAgent
@@ -77,9 +77,10 @@ if __name__ == "__main__":
     logger.info("Started")
 
     skill_manager = SkillManager("./skills/chroma_db", sdk)
-    curriculum_agent = CurriculumAgent()
-    action_agent = ActionAgent()
-    critic_agent = CriticAgent()
+    log_run_promts = Run()
+    curriculum_agent = CurriculumAgent(logs_run_promts)
+    action_agent = ActionAgent(logs_run_promts)
+    critic_agent = CriticAgent(log_run_promts)
 
     env = SaveStateWrapper(make_craftax_env_from_name("Craftax-Symbolic-v1", auto_reset=False), SEED, "logs")
     obs, state = env.reset()

@@ -3,13 +3,13 @@ from agents.formating import format_text_with_state
 
 
 class CurriculumAgent:
-    def __init__(self):
+    def __init__(self, logs_run):
         model = sdk.models.completions("yandexgpt-32k")
         model.configure(temperature=0.0)
         self.model = model
         self.completed_tasks = []
         self.failed_tasks = []
-
+        self.logs_run = logs_run
         with open("system_promts/tutorial.txt") as file:
             self.tutorial = file.read()
         with open("system_promts/curriculum_qa_step1_ask_questions.txt") as file:
@@ -36,7 +36,7 @@ class CurriculumAgent:
 
         user_promt = format_text_with_state(self.qa_step_1_promt, state, self.completed_tasks, self.failed_tasks)
 
-        result = self.model.run(
+        result = self.logs_run.run(self.model,
             [
                 {
                     "role": "system",
@@ -65,7 +65,7 @@ class CurriculumAgent:
         for i in range(len(questions)):
             user_promt = self.qa_step_2_promt.format(questions[i], concepts[i])
 
-            result = self.model.run(
+            result = self.logs_run.run(self.model,
                 [
                     {
                         "role": "system",
@@ -93,7 +93,7 @@ class CurriculumAgent:
         for ques_and_answ in exploration_progress:
             start_promt += f"Question: {ques_and_answ['question']}\nAnswer: {ques_and_answ['answer']}"
         user_promt = start_promt + curriculum_user_promt
-        result = self.model.run(
+        result = self.logs_run.run(self.model,
             [
                 {
                     "role": "system",
@@ -116,7 +116,7 @@ class CurriculumAgent:
             state.inventory, task
         )
 
-        result = self.model.run(
+        result = self.logs_run.run(self.model,
             [
                 {
                     "role": "system",

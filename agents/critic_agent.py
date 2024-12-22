@@ -3,10 +3,10 @@ from agents.formating import format_text_with_state
 import json
 
 class CriticAgent:
-    def __init__(self):
+    def __init__(self, logs_run):
         model = sdk.models.completions("yandexgpt")
         self.model = model.configure(temperature=0.0)
-        
+        self.logs_run = logs_run
         with open("system_promts/tuturial_with_constans.txt") as file:
             self.tutorial = file.read()
         with open("system_promts/critic.txt") as file:
@@ -18,7 +18,7 @@ class CriticAgent:
 
         critic_user_promt = format_text_with_state(self.critic_user_promt, state, task, context)
 
-        result = self.model.run(
+        result = self.logs_run.run(self.model, 
             [
                 {
                     "role": "system",
