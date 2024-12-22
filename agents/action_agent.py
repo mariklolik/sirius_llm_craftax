@@ -8,7 +8,7 @@ class ActionAgent:
     def __init__(self):
         model = sdk.models.completions("yandexgpt-32k")
         self.model = model.configure(temperature=0.0)
-        with open("system_promts/tuturial_with_constans.txt") as file:
+        with open("system_promts/tutorial_with_constants.txt", encoding="utf-8") as file:
             self.tutorial = file.read()
         with open("system_promts/action_template.txt") as file:
             self.action_template_system_promt = file.read()
