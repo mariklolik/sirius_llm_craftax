@@ -4,21 +4,6 @@ You are required to evaluate if I have met the task requirements. Exceeding the 
 
 I will give you the following information:
 
-About Map:
-    Map_blocks: {}
-    Сoordinate_ladder_down: {} {}
-    Сoordinate_ladder_up: {}
-About Player:
-    Player_position: {}
-    Player_health: {}
-    Player_hunger: {}
-    Player_drink: {}
-    Player_energy: {}
-    Player_level: {}
-    Player_mana: {}
-    Is_sleeping: {}
-    Is_resting: {}
-    inventory: {}
 Task: {}
 Context: {}
 

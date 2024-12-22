@@ -99,7 +99,7 @@ if __name__ == "__main__":
         critique = None
         success = False
         prev_state = env.saved_state
-        skills = []
+        skills = skill_manager.fetch_skills(task)
         for i in range(4):
             state = prev_state
             code = action_agent.generate_code(code, execution_errors, state, task, skills, critique)

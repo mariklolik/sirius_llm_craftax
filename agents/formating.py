@@ -46,6 +46,10 @@ def format_text_with_state(text: str, state, *args):
     is_sleeping = state.is_sleeping
     is_resting = state.is_resting
     inventory = state.inventory
+    inv = []
+    for i in inventory:
+        if i > 0:
+            inv.append(i.tolist())
     text = text.format(
         map_blocks,
         coord_ladder_down, 

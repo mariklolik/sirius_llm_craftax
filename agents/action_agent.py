@@ -15,7 +15,7 @@ class ActionAgent:
             self.action_template_system_promt = file.read()
         with open("system_promts/action_response_format.txt") as file:
             self.action_template_system_promt += file.read()
-        with open("user_promts/action.txt") as file:
+        with open("user_promts/action_user_promt.txt") as file:
             self.action = file.read()
 
     def generate_code(self, code, error, state, task, context, critique):

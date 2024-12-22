@@ -173,5 +173,6 @@ cython_debug/
 skills/chroma_db
 
 #debug files
-logs
-logs_promts
+logs/
+logs_promts/
+logs/actions.txt

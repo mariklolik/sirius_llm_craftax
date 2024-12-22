@@ -16,7 +16,7 @@ class CriticAgent:
 
     def check_task_success(self, state, task, context):
 
-        critic_user_promt = format_text_with_state(self.critic_user_promt, state, task, context)
+        critic_user_promt = self.critic_user_promt.format(task, context)
 
         result = self.logs_run.run(self.model, 
             [

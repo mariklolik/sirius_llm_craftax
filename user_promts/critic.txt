@@ -1,17 +1,2 @@
-About Map:
-    Map_blocks: {}
-    Сoordinate_ladder_down: {} {}
-    Сoordinate_ladder_up: {}
-About Player:
-    Player_position: {}
-    Player_health: {}
-    Player_hunger: {}
-    Player_drink: {}
-    Player_energy: {}
-    Player_level: {}
-    Player_mana: {}
-    Is_sleeping: {}
-    Is_resting: {}
-    inventory: {}
 Task: {}
 Context: {}
