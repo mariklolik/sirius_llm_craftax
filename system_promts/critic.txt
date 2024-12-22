@@ -63,21 +63,7 @@ Task: Mine 5 iron_ore
 
 RESPONSE:
 {{
-    "reasoning": "Mining iron_ore in Craftax will get raw_iron. You have 5 iron_ore in your inventory.",
-    "success": true,
-    "critique": ""
-}}
-
-INPUT:
-Inventory: {{... ,'iron_sword': 1}}
-
-Task: Kill 1 zombie
-
-Context: ...
-
-RESPONSE
-{{
-    "reasoning": "You have iron_sword in your inventory, which means you can successfully kill one zombie.",
+    "reasoning": "Mining iron_ore in Craftax will get iron_ore. You have 5 iron_ore in your inventory.",
     "success": true,
     "critique": ""
 }}

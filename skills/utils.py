@@ -22,7 +22,7 @@ class SkillManager:
         emb_model = YandexEmbeddingModel(sdk)
         self.gpt = sdk.models.completions("yandexgpt")
         self.gpt = self.gpt.configure(temperature=0.0)
-        with open("skills/SkillDescriptorSystemPrompt.txt", encoding="utf-8") as f:
+        with open("system_promts/skill_manager.txt", encoding="utf-8") as f:
             self.system_prompt = f.read()
         self.db = Chroma(
             persist_directory=db_src, embedding_function=emb_model
@@ -74,8 +74,8 @@ class SkillManager:
     def fetch_skills(self, target_task: str):
         docs = [
             (text.page_content, text.metadata["code"])
-            for text, sim in self.db.similarity_search_with_relevance_scores(
-                target_task, 5, score_threshold=0.0
+            for text in self.db.similarity_search(
+                target_task, k=7
             )
         ]
         return docs
