@@ -7,6 +7,7 @@ from craftax.craftax.craftax_state import EnvState
 
 from primitives.utils import get_obs_mask, is_in_obs
 from primitives.executor import executor
+from primitives.checks import *
 
 DIRECTIONS_TO_ACTIONS = {
     (0, 0): Action.NOOP,
@@ -34,8 +35,8 @@ BLOCK_WEIGHT = {
     BlockType.COAL: 10,
     BlockType.IRON: 10,
     BlockType.DIAMOND: 10,
-    BlockType.CRAFTING_TABLE: 15,
-    BlockType.FURNACE: 15,
+    BlockType.CRAFTING_TABLE: INF_WEIGHT,
+    BlockType.FURNACE: INF_WEIGHT,
     BlockType.SAND: 1,
     BlockType.LAVA: 15,
     # пока не работаем с этим
@@ -178,9 +179,9 @@ def move_to_pos(
     env,
     target_pos: jax.numpy.ndarray,
     G: nx.DiGraph = None,
-    can_dig=False,
-    can_place=False,
 ):
+    can_dig = check_inventory_wood_pickaxe(env)
+    can_place = bool(check_inventory_stone(env))
     state = env.saved_state
 
     if G is None:

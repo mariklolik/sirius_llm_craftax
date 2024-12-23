@@ -14,9 +14,7 @@ def find_and_mine_block(
     env,
     block_type: BlockType,
     count: int = 1,
-    max_iter=25,
-    can_dig=False,
-    can_place=False,
+    max_iter=25
 ):
     logger.info(f"mining {count } of {block_type}...")
     for block_iteration in range(count):
@@ -24,9 +22,7 @@ def find_and_mine_block(
         explore_until(
             env,
             callback=block_type,
-            max_iter=max_iter,
-            can_dig=can_dig,
-            can_place=can_place,
+            max_iter=max_iter
         )
 
         targets = find_block_all(env.saved_state, block_type)
@@ -39,6 +35,6 @@ def find_and_mine_block(
             .argmin()
         )
         closest_target = targets[closest_target_index]
-        move_to_pos(env, closest_target, can_dig=can_dig, can_place=can_place)
+        move_to_pos(env, closest_target)
         act_DO(env)
     logger.debug(f"Finished mining of {block_type}.")

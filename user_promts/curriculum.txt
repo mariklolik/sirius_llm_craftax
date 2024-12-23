@@ -1,7 +1,7 @@
 About Map:
     Map_blocks: {}
-    Сoordinate_ladder_down: {} {}
-    Сoordinate_ladder_up: {}
+    Coordinate_ladder_down: {} {}
+    Coordinate_ladder_up: {}
 About Player:
     Player_position: {}
     Player_health: {}

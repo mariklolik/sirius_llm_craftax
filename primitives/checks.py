@@ -106,7 +106,8 @@ def check_inventory_diamond_sword(env) -> bool:
 
 
 ## BLOCK ON MAP
-
+def check_player_position(env):
+    return env.saved_state.player_position.tolist()
 
 def check_forward_block(env) -> BlockType:
     state: EnvState = env.saved_state

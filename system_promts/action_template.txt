@@ -2,10 +2,6 @@
 Craftax - это пошаговая игра об исследовании подземелий, добыче полезных ископаемых, изготовлении снаряжения и борьбе с врагами.
 Вот несколько полезных программ, написанных на python.
 
-from craftax.craftax.constants import Action
-from primitives.executor import executor
-
-Примитивы:
     def act_NOOP(env):
         executor(env, [Action.NOOP])
 
