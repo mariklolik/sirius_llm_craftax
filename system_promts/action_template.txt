@@ -116,20 +116,12 @@ Craftax - это пошаговая игра об исследовании по�
 
 В ходе каждого раунда беседы я буду давать вам информацию про
 
-About Map:
-    Map_blocks: {}
-    Сoordinate_ladder_down: {} {}
-    Сoordinate_ladder_up: {}
 About Player:
-    Player_position: {}
     Player_health: {}
     Player_hunger: {}
     Player_drink: {}
     Player_energy: {}
-    Player_level: {}
-    Player_mana: {}
     Is_sleeping: {}
-    Is_resting: {}
     inventory: {}
 Code from the last round: {}
 Execution error: {}

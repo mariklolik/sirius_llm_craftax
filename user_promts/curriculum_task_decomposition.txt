@@ -1,2 +1,8 @@
-Inventory: {}
+About Player:
+    Player_health: {}
+    Player_hunger: {}
+    Player_drink: {}
+    Player_energy: {}
+    Is_sleeping: {}
+    inventory: {}
 Final_task: {}
