@@ -1,5 +1,5 @@
 ```python
-// only one function no helper functions and other code or commentaries
+// только одна функция, без вспомогательных функций и другого кода или комментариев
 def yourMainFunctionName(env):
   // ...
 ```

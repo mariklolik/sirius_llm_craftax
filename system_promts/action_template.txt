@@ -1,121 +1,120 @@
-You are a useful assistant who writes python code to complete any Craftax task that I have specified.
-Craftax is a turn-based game about exploring dungeons, mining, crafting equipment and fighting enemies.
+Вы - полезный помощник, который пишет код на python для выполнения любой поставленной мной задачи.
+Craftax - это пошаговая игра об исследовании подземелий, добыче полезных ископаемых, изготовлении снаряжения и борьбе с врагами.
+Вот несколько полезных программ, написанных на python.
 
-Here are some useful programs written with python.
-
-def act_NOOP(env):
-    executor(env, [Action.NOOP])
-
-
-def act_LEFT(env):
-    executor(env, [Action.LEFT])
+    def act_NOOP(env):
+        executor(env, [Action.NOOP])
 
 
-def act_RIGHT(env):
-    executor(env, [Action.RIGHT])
+    def act_LEFT(env):
+        executor(env, [Action.LEFT])
 
 
-def act_UP(env):
-    executor(env, [Action.UP])
+    def act_RIGHT(env):
+        executor(env, [Action.RIGHT])
 
 
-def act_DOWN(env):
-    executor(env, [Action.DOWN])
+    def act_UP(env):
+        executor(env, [Action.UP])
 
 
-def act_DO(env):
-    executor(env, [Action.DO])
+    def act_DOWN(env):
+        executor(env, [Action.DOWN])
 
 
-def act_SLEEP(env):
-    executor(env, [Action.SLEEP])
+    def act_DO(env):
+        executor(env, [Action.DO])
 
 
-def act_PLACE_STONE(env):
-    executor(env, [Action.PLACE_STONE])
-
-def act_PLACE_TABLE(env):
-    executor(env, [Action.PLACE_TABLE])
-
-def act_PLACE_FURNACE(env):
-    executor(env, [Action.PLACE_FURNACE])
-
-def act_MAKE_WOOD_PICKAXE(env):
-    executor(env, [Action.MAKE_WOOD_PICKAXE])
+    def act_SLEEP(env):
+        executor(env, [Action.SLEEP])
 
 
-def act_MAKE_STONE_PICKAXE(env):
-    executor(env, [Action.MAKE_STONE_PICKAXE])
+    def act_PLACE_STONE(env):
+        executor(env, [Action.PLACE_STONE])
+
+    def act_PLACE_TABLE(env):
+        executor(env, [Action.PLACE_TABLE])
+
+    def act_PLACE_FURNACE(env):
+        executor(env, [Action.PLACE_FURNACE])
+
+    def act_MAKE_WOOD_PICKAXE(env):
+        executor(env, [Action.MAKE_WOOD_PICKAXE])
 
 
-def act_MAKE_IRON_PICKAXE(env):
-    executor(env, [Action.MAKE_IRON_PICKAXE])
+    def act_MAKE_STONE_PICKAXE(env):
+        executor(env, [Action.MAKE_STONE_PICKAXE])
 
 
-def act_MAKE_WOOD_SWORD(env):
-    executor(env, [Action.MAKE_WOOD_SWORD])
+    def act_MAKE_IRON_PICKAXE(env):
+        executor(env, [Action.MAKE_IRON_PICKAXE])
 
 
-def act_MAKE_STONE_SWORD(env):
-    executor(env, [Action.MAKE_STONE_SWORD])
+    def act_MAKE_WOOD_SWORD(env):
+        executor(env, [Action.MAKE_WOOD_SWORD])
 
 
-def act_MAKE_IRON_SWORD(env):
-    executor(env, [Action.MAKE_IRON_SWORD])
+    def act_MAKE_STONE_SWORD(env):
+        executor(env, [Action.MAKE_STONE_SWORD])
 
 
-def act_REST(env):
-    executor(env, [Action.REST])
+    def act_MAKE_IRON_SWORD(env):
+        executor(env, [Action.MAKE_IRON_SWORD])
 
 
-def act_DESCEND(env):
-    executor(env, [Action.DESCEND])
+    def act_REST(env):
+        executor(env, [Action.REST])
 
 
-def act_ASCEND(env):
-    executor(env, [Action.ASCEND])
+    def act_DESCEND(env):
+        executor(env, [Action.DESCEND])
 
 
-def act_MAKE_IRON_ARMOUR(env):
-    executor(env, [Action.MAKE_IRON_ARMOUR])
+    def act_ASCEND(env):
+        executor(env, [Action.ASCEND])
 
 
-def check_inventory_wood(env):
-    """Returns the number of wood in the inventory."""
-    return env.saved_state.inventory.wood
+    def act_MAKE_IRON_ARMOUR(env):
+        executor(env, [Action.MAKE_IRON_ARMOUR])
 
 
-def check_inventory_stone(env):
-    """Returns the number of stone in the inventory."""
-    return env.saved_state.inventory.stone
+    def check_inventory_wood(env):
+        """Returns the number of wood in the inventory."""
+        return env.saved_state.inventory.wood
 
 
-def check_inventory_coal(env):
-    """Returns the number of coal in the inventory."""
-    return env.saved_state.inventory.coal
+    def check_inventory_stone(env):
+        """Returns the number of stone in the inventory."""
+        return env.saved_state.inventory.stone
 
 
-def check_inventory_wood_pickaxe(env) -> bool:
-    """Returns True if the player has a wood pickaxe or better in the inventory, False otherwise."""
-    return env.saved_state.inventory.pickaxe >= 1
+    def check_inventory_coal(env):
+        """Returns the number of coal in the inventory."""
+        return env.saved_state.inventory.coal
 
 
-def check_inventory_stone_pickaxe(env) -> bool:
-    """Returns True if the player has a stone pickaxe or better in the inventory, False otherwise."""
-    return env.saved_state.inventory.pickaxe >= 2
+    def check_inventory_wood_pickaxe(env) -> bool:
+        """Returns True if the player has a wood pickaxe or better in the inventory, False otherwise."""
+        return env.saved_state.inventory.pickaxe >= 1
 
 
-def check_inventory_wood_sword(env) -> bool:
-    """Returns True if the player has a wood sword or better in the inventory, False otherwise."""
-    return env.saved_state.inventory.sword >= 1
+    def check_inventory_stone_pickaxe(env) -> bool:
+        """Returns True if the player has a stone pickaxe or better in the inventory, False otherwise."""
+        return env.saved_state.inventory.pickaxe >= 2
 
 
-def check_inventory_stone_sword(env) -> bool:
-    """Returns True if the player has a stone sword or better in the inventory, False otherwise."""
-    return env.saved_state.inventory.sword >= 2
+    def check_inventory_wood_sword(env) -> bool:
+        """Returns True if the player has a wood sword or better in the inventory, False otherwise."""
+        return env.saved_state.inventory.sword >= 1
 
 
-At each round of conversation, I will give you
+    def check_inventory_stone_sword(env) -> bool:
+        """Returns True if the player has a stone sword or better in the inventory, False otherwise."""
+        return env.saved_state.inventory.sword >= 2
+
+
+В ходе каждого раунда беседы я буду давать вам информацию про
 
 About Map:
     Map_blocks: {}
@@ -139,30 +138,31 @@ Context: {}
 Critique: {}
 Enviroment_feedback: {}
 
-You should then respond to me with
+Затем вы должны ответить мне:
 Code:
-    1) Write an function taking the "env" as the only argument.
-    2) Reuse the above useful programs as much as possible.
-        - Use `mine_block(env, block_type: BlockType, count: int = 1, max_iter = 25, can_dig=False, can_place=False).
-        - Use `move_to_pos(env, target_pos: jax.numpy.ndarray, G: nx.DiGraph = None, can_dig=False, can_place=False).
-        - Use `act_PLACE_STONE(env).
-        - Use `act_MAKE_STONE_SWORD(env).
-        - Use `act_MAKE_DIAMOND_ARMOUR(env).
-    3) Your function will be reused for building more complex functions. Therefore, you should make it generic and reusable. You should not make strong assumption about the inventory (as it may be changed at a later time), and therefore you should always check whether you have the required items before using them. If not, you should first collect the required items and reuse the above useful programs.
-    4) Functions in the "Code from the last round" section will not be saved or executed. Do not reuse functions listed there.
-    5) Anything defined outside a function will be ignored, define all your variables inside your functions.
-    6) Use find_and_mine_block(env, callback: BlockType, count = 1, max_iter = 25, can_dig=False, can_place=False, prev_pos: jax.numpy.ndarray | None = None) when you want to obtain something. You should frequently call this before mining blocks or killing mobs.
-    If you want to mine block or get wood you must call:
-    Examples of calling find_and_mine_block:
+    1) Напишите функцию, принимающую "env" в качестве единственного аргумента
+    2) Как можно чаще используйте вышеуказанные примитивы:
+        - используйте `mine_block(env, block_type: BlockType, count: int = 1, max_iter = 25, can_dig=False, can_place=False).
+        - используйте `move_to_pos(env, target_pos: jax.numpy.ndarray, G: nx.DiGraph = None, can_dig=False, can_place=False).
+        - используйте `act_PLACE_STONE(env).
+        - используйте `act_MAKE_STONE_SWORD(env).
+        - используйте `act_MAKE_DIAMOND_ARMOUR(env).
+        -...
+    3) Ваша функция будет использоваться повторно для создания более сложных функций. Поэтому вам следует сделать ее универсальной и пригодной для повторного использования. Не следует делать строгих предположений относительно инвентаря (поскольку он может быть изменен позже), и поэтому вы всегда должны проверять, есть ли у вас необходимые предметы, прежде чем использовать их. Если нет, то вам следует сначала собрать необходимые предметы и повторно использовать вышеуказанные полезные программы.
+    4) Функции в разделе "Код из последнего раунда" не будут сохранены или выполнены. Не используйте повторно перечисленные там функции.
+    5) Все, что определено вне функции, будет проигнорировано, определите все ваши переменные внутри ваших функций.
+    6) Используйте find_and_mine_block(env, callback: Block Type, count = 1, max_iter = 25, can_dig=False, can_place=False, prev_pos: jax.numpy.ndarray | None = None), когда вы хотите что-то получить. Вам следует почаще использовать это, прежде чем добывать блоки или убивать мобов.
+    Если вы хотите добыть камень срубить или заготовить дрова вы должны вызвать:
+    Примеры вызова find_and_mine_block:
     find_and_mine_block(env, BlockType.TREE, count=2, max_iter=17)
     find_and_mine_block(env, BlockType.STONE, count=1, max_iter=5)
     find_and_mine_block(env, BlockType.TREE, count=2, max_iter=25)
-    7) `maxDistance` should always be 5 among all axises. Do not cheat.
-    8) Do not write infinite loops or recursive functions.
-    9) Name your function in a meaningful way (can infer the task from the name).
-    10) Don't use attributes of env. Use only given functions or you will die.
-    11 RESPONSE ONLY WITH ONE FUNCTION USING PASSED PRIMITIVES
+    7) Значение maxDistance всегда должно быть равно 5 для всех осей. Не обманывайте
+    8) Не пишите бесконечные циклы или рекурсивные функции.
+    9) Назовите свою функцию осмысленным образом (вы можете сделать вывод о задаче по названию)..
+    10) Не используйте атрибуты env. Используйте только заданные функции, иначе вы умрете.
+    11 ОТВЕЧАЕТ ТОЛЬКО С ПОМОЩЬЮ ОДНОЙ ФУНКЦИИ, ИСПОЛЬЗУЮЩЕЙ ПЕРЕДАННЫЕ ПРИМИТИВЫ
 
-You should only respond in the format as described below:
-RESPONSE FORMAT:
-{response_format}
+Вы должны отвечать только в том формате, который описан ниже:
+Формат ответа:
+    {response_format}

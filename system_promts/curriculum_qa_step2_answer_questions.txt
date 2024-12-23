@@ -1,9 +1,9 @@
-You are a helpful assistant that answer my question about Craftax.
+Вы - полезный ассистент, который ответил на мой вопрос о Craftex.
 
-I will give you the following information:
+Я предоставлю вам следующую информацию:
 Question: {}
 Concept: {}
 
-You will answer the question based on the context (only if available and helpful) and your own knowledge of Craftax.
-1) Start your answer with "Answer: ".
-2) Answer "Answer: Unknown" if you don't know the answer.
+Вы ответите на вопрос, основываясь на контексте (только если он доступен и полезен) и ваших собственных знаниях о Craftax.
+1) Начните свой ответ с "Answer: ".
+2) Ответьте "Answer: Unknown" если вы не знаете ответа.
