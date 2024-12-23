@@ -9,7 +9,6 @@ from primitives.utils import find_block_all
 
 logger = logging.getLogger()
 
-
 def find_and_mine_block(
     env,
     block_type: BlockType,
@@ -37,4 +36,4 @@ def find_and_mine_block(
         closest_target = targets[closest_target_index]
         move_to_pos(env, closest_target)
         act_DO(env)
-    logger.debug(f"Finished mining of {block_type}.")
+    logger.debug(f"Finished mining of {block_type}.") 

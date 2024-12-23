@@ -12,6 +12,7 @@ from primitives.wrapper import SaveStateWrapper
 from craftax.craftax_env import make_craftax_env_from_name
 import primitives.visual as visual
 import os
+import shutil
 import importlib.util
 import sys
 
@@ -40,11 +41,7 @@ modules = import_all_modules_from_folder("primitives")
 
 eval_context = create_eval_context(modules)
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs")
-os.makedirs(log_dir, exist_ok=True)
-
-SEED = 123
+SEED = 148722852691337
 
 def invoke_action(env, code):
     global eval_context
@@ -56,6 +53,8 @@ def invoke_action(env, code):
         return "You didn't write any functions. Write one function."
     func = funcs[0]
     func_name = func[4:func.find('(')] #def NAME(...)
+    if (code.count(func_name) > 1):
+        return "Do not write recursive functions. Fix this or you will die."
     code += func_name + "(env)"
     try:
         exec(code, globals())
@@ -66,6 +65,11 @@ def invoke_action(env, code):
 
 
 if __name__ == "__main__":
+    log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs")
+    shutil.rmtree(log_dir, ignore_errors=True)
+    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    os.makedirs(log_dir, exist_ok=True)
+    shutil.rmtree("logs_promts", ignore_errors=True)
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
     logger = logging.getLogger("main_logger")
     handler = logging.StreamHandler(sys.stdout)
@@ -91,37 +95,37 @@ if __name__ == "__main__":
             state, exploration_progress
         )
         subtasks = curriculum_agent.task_decomposition(state, final_task)
-        task = "mine 3 wood and create table and then craft on table wooden pickaxe"
-        code = None
-        environment_feedback = None
-        execution_errors = None
-        critique = None
-        success = False
-        skills = skill_manager.fetch_skills(task)
-        for i in range(4):
-            state = env.saved_state
-            code = action_agent.generate_code(code, execution_errors, state, task, skills, critique, environment_feedback)
-            execution_errors = invoke_action(state, code)
-            state = env.saved_state
-            environment_feedback, success, critique = critic_agent.check_task_success(
-                state, task, skills
-            )
-            if success:
-                logger.info(f"{task} passed!")
-                break
-            else:
-                logger.info(f"{task} not passed!")
-            directory = os.path.join('./logs', task)
-            path = os.path.join(f'./logs/{task}', f"{i}.py")
-            os.makedirs(directory, exist_ok=True)
-            with open(path, "w", encoding="utf-8") as file:
-                file.write(code)
-                file.write(execution_errors)
-        if success:
-            skill_manager.add_skill(code)
-            curriculum_agent.add_completed_task(task)
-        else:
-            curriculum_agent.add_failed_task(task)
+        for task in subtasks:
+            code = None
+            environment_feedback = None
+            execution_errors = ""
+            critique = None
+            skills = skill_manager.fetch_skills(task)
+            for i in range(4):
+                state = env.saved_state
+                code = action_agent.generate_code(code, execution_errors, state, task, skills, critique, environment_feedback)
+
+                directory = os.path.join('./logs', task)
+                path = os.path.join(f'./logs/{task}', f"{i}.py")
+                os.makedirs(directory, exist_ok=True)
+                with open(path, "w", encoding="utf-8") as file:
+                    file.write(code + "\n\n")
+                    file.write(execution_errors)
+                
+                execution_errors = invoke_action(state, code)
+                state = env.saved_state
+                environment_feedback, success, critique = critic_agent.check_task_success(
+                    state, task, skills
+                )
+                if success:
+                    logger.info(f"{task} passed!")
+                    skill_manager.add_skill(code)
+                    curriculum_agent.add_completed_task(task)
+                    break
+                else:
+                    logger.info(f"{task} not passed!")
+                    curriculum_agent.add_failed_task(task)
+
 
     logger.info(get_achievements(state))
     logger.info("Finished")

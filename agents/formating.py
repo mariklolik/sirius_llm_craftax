@@ -13,10 +13,9 @@ def format_text_with_state(text: str, state, *args):
     inv = {}
     for key, value in inventory.items():
         value = value.tolist()
-        if isinstance(value, int):
+        if isinstance(value, int) and key != "sapling":
             if value > 0:
                 inv[key] = value
-    print(inv)
     text = text.format(
         player_health,
         player_hunger,

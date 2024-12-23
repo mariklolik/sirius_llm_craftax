@@ -1,6 +1,6 @@
 from craftax.craftax.constants import Action
 from primitives.executor import executor
-from primitives.checks import check_player_position
+from primitives.checks import check_player_position, check_forward_block
 from primitives.move_to_node_smart import move_to_pos
 
 
@@ -36,6 +36,8 @@ def act_PLACE_STONE(env):
     executor(env, [Action.PLACE_STONE])
 
 def act_PLACE_TABLE(env):
+    if (check_forward_block(env) != BlockType.CRAFTING_TABLE):
+        act_DO(env)
     executor(env, [Action.PLACE_TABLE])
 
 def act_PLACE_FURNACE(env):

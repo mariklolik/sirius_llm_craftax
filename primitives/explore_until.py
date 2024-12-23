@@ -47,7 +47,7 @@ def explore_until(
         G = gen_graph_smart(env.saved_state, can_dig, can_place)
         pos = explore_choose_node(env, G, prev_pos)
         prev_pos = env.saved_state.player_position
-        move_to_pos(env, pos, G, can_dig, can_place)
+        move_to_pos(env, pos, G)
 
     else:
         logger.info(f"No block found after {max_iter} iterations.")

@@ -9,13 +9,11 @@ class ActionAgent:
         model = sdk.models.completions("yandexgpt-32k")
         self.model = model.configure(temperature=0.0)
         self.logs_run = logs_run
-        with open("system_promts/tutorial_with_constants.txt", encoding="utf-8") as file:
-            self.tutorial = file.read()
-        with open("system_promts/action_template.txt") as file:
+        with open("system_promts/action_template.txt", encoding="utf-8") as file:
             self.action_template_system_promt = file.read()
-        with open("system_promts/action_response_format.txt") as file:
+        with open("system_promts/action_response_format.txt", encoding="utf-8") as file:
             self.action_template_system_promt += file.read()
-        with open("user_promts/action_user_promt.txt") as file:
+        with open("user_promts/action_user_promt.txt", encoding="utf-8") as file:
             self.action = file.read()
 
     def generate_code(self, code, error, state, task, context, critique, env_fid):
@@ -26,7 +24,7 @@ class ActionAgent:
             [
                 {
                     "role": "system",
-                    "text": self.tutorial + self.action_template_system_promt,
+                    "text": self.action_template_system_promt,
                 },
                 {
                     "role": "user",

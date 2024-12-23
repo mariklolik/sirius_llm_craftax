@@ -43,8 +43,8 @@ Task:
     Question: Есть ли поблизости какой-нибудь источник воды?
     Concept: вода
   Good example:
-    Question: Какие блоки я могу найти в гномьих шахтах?
-    Concept: гномьих шахтах
+    Question: Какие руды я могу найти в мире?
+    Concept: руды
 
 Допустим, ваши текущие гномьи шахты находятся на 2-м этаже. Вы можете задавать такие вопросы, как:Question: What items can I find in Gnomish Mines?
 Concept: Гномьи шахты

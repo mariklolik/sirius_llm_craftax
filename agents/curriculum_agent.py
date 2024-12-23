@@ -12,24 +12,24 @@ class CurriculumAgent:
         self.logs_run = logs_run
         with open("system_promts/tutorial.txt", encoding="utf-8") as file:
             self.tutorial = file.read()
-        with open("system_promts/curriculum_qa_step1_ask_questions.txt") as file:
+        with open("system_promts/curriculum_qa_step1_ask_questions.txt", encoding="utf-8") as file:
             self.qa_step_1_promt_system_promt = file.read()
-        with open("user_promts/curriculum_qa_step1.txt") as file:
+        with open("user_promts/curriculum_qa_step1.txt", encoding="utf-8") as file:
             self.qa_step_1_promt = file.read()
 
-        with open("system_promts/curriculum_qa_step2_answer_questions.txt") as file:
+        with open("system_promts/curriculum_qa_step2_answer_questions.txt", encoding="utf-8") as file:
             self.qa_step_2_promt_system_promt = file.read()
-        with open("user_promts/curriculum_qa_step2.txt") as file:
+        with open("user_promts/curriculum_qa_step2.txt", encoding="utf-8") as file:
             self.qa_step_2_promt = file.read()
 
-        with open("system_promts/curriculum.txt") as file:
+        with open("system_promts/curriculum.txt", encoding="utf-8") as file:
             self.curriculum_system_promt = file.read()
-        with open("user_promts/curriculum.txt") as file:
+        with open("user_promts/curriculum.txt", encoding="utf-8") as file:
             self.curriculum_user_promt = file.read()
         
-        with open("system_promts/curriculum_task_decomposition.txt") as file:
+        with open("system_promts/curriculum_task_decomposition.txt", encoding="utf-8") as file:
             self.task_decomp_system_promt = file.read()
-        with open("user_promts/curriculum_task_decomposition.txt") as file:
+        with open("user_promts/curriculum_task_decomposition.txt", encoding="utf-8") as file:
             self.task_decomp_user_promt = file.read()
 
     def get_exploration_progress(self, state):

@@ -1,4 +1,4 @@
-from langchain.vectorstores import Chroma
+from langchain_community.vectorstores import Chroma
 from langchain_core.documents.base import Document
 import logging
 
@@ -29,8 +29,6 @@ class SkillManager:
         )
         if len(self.db) == 0:
             files_with_functions = [
-                "simple_actions.py",
-                "checks.py",
                 "explore.py",
                 "explore_until.py",
                 "utils.py",
