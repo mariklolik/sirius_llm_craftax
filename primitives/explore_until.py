@@ -8,6 +8,7 @@ from primitives.explore import explore_choose_node
 from primitives.move_to_node_smart import gen_graph_smart, move_to_pos
 from primitives.utils import find_block_any
 from functools import partial
+from primitives.checks import *
 
 logger = logging.getLogger()
 
@@ -16,10 +17,10 @@ def explore_until(
     env,
     callback: BlockType | typing.Callable[[typing.Any], bool],
     max_iter=25,
-    can_dig=False,
-    can_place=False,
     prev_pos: jax.numpy.ndarray | None = None,
 ):
+    can_dig = check_inventory_wood_pickaxe(env)
+    can_place = bool(check_inventory_stone(env))
     logger.info(f"exploring...")
 
     if isinstance(callback, BlockType):

@@ -3,10 +3,6 @@ Craftax is a turn-based game about exploring dungeons, mining, crafting equipmen
 
 Here are some useful programs written with python.
 
-from craftax.craftax.constants import Action
-from primitives.executor import executor
-
-
 def act_NOOP(env):
     executor(env, [Action.NOOP])
 
