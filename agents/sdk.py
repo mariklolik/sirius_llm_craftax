@@ -10,11 +10,14 @@ load_dotenv()
 
 sdk = YCloudML(folder_id=environ["folder_id"], auth=environ["auth"])
 
+
 class Run:
     def __init__(self):
         self.base_directory = "logs_promts"
         current_time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        self.directory = os.path.join(self.base_directory, f"Run_{current_time}")
+        self.directory = os.path.join(
+            self.base_directory, f"Run_{current_time}"
+        )
         os.makedirs(self.directory, exist_ok=True)
 
     def run(self, model, promt):
@@ -22,11 +25,9 @@ class Run:
         file_path = os.path.join(self.directory, file_name)
 
         result = model.run(promt)
-        with open(file_path, 'w', encoding="utf-8") as file:
+        with open(file_path, "w", encoding="utf-8") as file:
             file.write(str(promt))
             file.write("\n\nResult:\n")
             file.write(result.alternatives[0].text)
-        
+
         return result
-
-

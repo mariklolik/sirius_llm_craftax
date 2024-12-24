@@ -1,6 +1,7 @@
 import jax
 from gym import Wrapper
 
+
 class SaveStateWrapper(Wrapper):
     def reset(self, *args, **kwargs):
         self.rng = jax.random.PRNGKey(self.seed)

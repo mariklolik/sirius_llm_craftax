@@ -35,11 +35,15 @@ def act_SLEEP(env):
 def act_PLACE_STONE(env):
     executor(env, [Action.PLACE_STONE])
 
+
 from craftax.craftax.constants import BlockType
+
+
 def act_PLACE_TABLE(env):
-    if (check_forward_block(env) != BlockType.CRAFTING_TABLE):
+    if check_forward_block(env) != BlockType.CRAFTING_TABLE:
         act_DO(env)
     executor(env, [Action.PLACE_TABLE])
+
 
 def act_PLACE_FURNACE(env):
     act_UP(env)
@@ -55,6 +59,7 @@ def act_PLACE_FURNACE(env):
     executor(env, [Action.PLACE_FURNACE])
     pos = check_player_position(env)
     move_to_pos([pos[0] + 1, pos[1] + 1])
+
 
 def act_MAKE_WOOD_PICKAXE(env):
     executor(env, [Action.MAKE_WOOD_PICKAXE])

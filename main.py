@@ -16,45 +16,52 @@ import shutil
 import importlib.util
 import sys
 
+
 def import_all_modules_from_folder(folder_path):
     modules = {}
     for filename in os.listdir(folder_path):
-        if filename.endswith('.py'):
+        if filename.endswith(".py"):
             module_name = filename[:-3]  # Remove the .py extension
             module_path = os.path.join(folder_path, filename)
-            spec = importlib.util.spec_from_file_location(module_name, module_path)
+            spec = importlib.util.spec_from_file_location(
+                module_name, module_path
+            )
             module = importlib.util.module_from_spec(spec)
             sys.modules[module_name] = module
             spec.loader.exec_module(module)
             modules[module_name] = module
     return modules
 
+
 def create_eval_context(modules):
     eval_context = {}
     for module_name, module in modules.items():
         for attr_name in dir(module):
-            if not attr_name.startswith('__'):
+            if not attr_name.startswith("__"):
                 eval_context[attr_name] = getattr(module, attr_name)
     return eval_context
+
 
 modules = import_all_modules_from_folder("primitives")
 
 eval_context = create_eval_context(modules)
 
 import random
+
 SEED = 44455
+
 
 def invoke_action(env, code):
     global eval_context
-    code = "from primitives import * \n" + code + '\n'
+    code = "from primitives import * \n" + code + "\n"
     funcs = SkillManager.split_functions(code)
     if len(funcs) > 1:
         return "You wrote more than 1 function. Write only one function. If you will do that again you will die"
     if len(funcs) == 0:
         return "You didn't write any functions. Write one function."
     func = funcs[0]
-    func_name = func[4:func.find('(')] #def NAME(...)
-    if (code.count(func_name) > 1):
+    func_name = func[4 : func.find("(")]  # def NAME(...)
+    if code.count(func_name) > 1:
         return "Do not write recursive functions. Fix this or you will die."
     code += func_name + "(env)"
     try:
@@ -68,14 +75,16 @@ def invoke_action(env, code):
 if __name__ == "__main__":
     log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs")
     shutil.rmtree(log_dir, ignore_errors=True)
-    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    sys.path.append(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    )
     os.makedirs(log_dir, exist_ok=True)
     shutil.rmtree("logs_promts", ignore_errors=True)
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
     logger = logging.getLogger("main_logger")
     handler = logging.StreamHandler(sys.stdout)
     logger.addHandler(handler)
- 
+
     with open(log_dir + "/actions.txt", "w") as f:
         pass
 
@@ -87,7 +96,11 @@ if __name__ == "__main__":
     action_agent = ActionAgent(log_run_promts)
     critic_agent = CriticAgent(log_run_promts)
 
-    env = SaveStateWrapper(make_craftax_env_from_name("Craftax-Symbolic-v1", auto_reset=False), SEED, "logs")
+    env = SaveStateWrapper(
+        make_craftax_env_from_name("Craftax-Symbolic-v1", auto_reset=False),
+        SEED,
+        "logs",
+    )
     obs, state = env.reset()
     game_finished = False
     while not game_finished:
@@ -104,19 +117,27 @@ if __name__ == "__main__":
             skills = skill_manager.fetch_skills(task)
             for i in range(4):
                 state = env.saved_state
-                code = action_agent.generate_code(code, execution_errors, state, task, skills, critique, environment_feedback)
+                code = action_agent.generate_code(
+                    code,
+                    execution_errors,
+                    state,
+                    task,
+                    skills,
+                    critique,
+                    environment_feedback,
+                )
 
-                directory = os.path.join('./logs', task)
-                path = os.path.join(f'./logs/{task}', f"{i}.py")
+                directory = os.path.join("./logs", task)
+                path = os.path.join(f"./logs/{task}", f"{i}.py")
                 os.makedirs(directory, exist_ok=True)
                 with open(path, "w", encoding="utf-8") as file:
                     file.write(code + "\n\n")
                     file.write(execution_errors)
-                
+
                 execution_errors = invoke_action(state, code)
                 state = env.saved_state
-                environment_feedback, success, critique = critic_agent.check_task_success(
-                    state, task, skills
+                environment_feedback, success, critique = (
+                    critic_agent.check_task_success(state, task, skills)
                 )
                 if success:
                     logger.info(f"{task} passed!")
@@ -126,7 +147,6 @@ if __name__ == "__main__":
                 else:
                     logger.info(f"{task} not passed!")
                     curriculum_agent.add_failed_task(task)
-
 
     logger.info(get_achievements(state))
     logger.info("Finished")

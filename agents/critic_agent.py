@@ -2,6 +2,7 @@ from agents.sdk import sdk
 from agents.formating import format_text_with_state
 import json
 
+
 class CriticAgent:
     def __init__(self, logs_run):
         model = sdk.models.completions("yandexgpt")
@@ -11,11 +12,15 @@ class CriticAgent:
             self.critic_system_promt = file.read()
         with open("user_promts/critic.txt", encoding="utf-8") as file:
             self.critic_user_promt = file.read()
+
     def check_task_success(self, state, task, context):
 
-        critic_user_promt = format_text_with_state(self.critic_user_promt, state, task, context)
+        critic_user_promt = format_text_with_state(
+            self.critic_user_promt, state, task, context
+        )
 
-        result = self.logs_run.run(self.model, 
+        result = self.logs_run.run(
+            self.model,
             [
                 {
                     "role": "system",
@@ -25,7 +30,7 @@ class CriticAgent:
                     "role": "user",
                     "text": critic_user_promt,
                 },
-            ]
+            ],
         )
-        data = json.loads(result.alternatives[0].text.replace("```", ''))
-        return data['reasoning'], data['success'], data['critique']
+        data = json.loads(result.alternatives[0].text.replace("```", ""))
+        return data["reasoning"], data["success"], data["critique"]

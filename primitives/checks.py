@@ -109,17 +109,22 @@ def check_inventory_diamond_sword(env) -> bool:
 def check_player_position(env):
     return env.saved_state.player_position.tolist()
 
+
 def check_player_hunger(env):
     return env.saved_state.player_hunger
+
 
 def check_player_drink(env):
     return env.saved_state.player_drink
 
+
 def check_player_energy(env):
     return env.saved_state.player_energy
 
+
 def check_player_health(env):
     return env.saved_state.player_health
+
 
 def check_forward_block(env) -> BlockType:
     state: EnvState = env.saved_state

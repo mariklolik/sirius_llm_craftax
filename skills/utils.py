@@ -43,38 +43,36 @@ class SkillManager:
                     for func in funcs:
                         self.add_skill(func)
             logger.info("Primitives spliting finished")
-                    
 
     @staticmethod
     def split_functions(code: str):
-        lines = code.split('\n')
+        lines = code.split("\n")
         res = []
         i = 0
         while i < len(lines):
-            if lines[i][:min(3, len(lines[i]))] == "def":
-                func = lines[i] + '\n'
-                while(True):
+            if lines[i][: min(3, len(lines[i]))] == "def":
+                func = lines[i] + "\n"
+                while True:
                     i += 1
                     if i == len(lines):
                         break
-                    if lines[i][:min(4, len(lines[i]))] == " " * 4\
-                        or (len(lines[i]) and lines[i][0] == ')')\
-                        or len(lines[i]) == 0:
-                        func += lines[i] + '\n'
+                    if (
+                        lines[i][: min(4, len(lines[i]))] == " " * 4
+                        or (len(lines[i]) and lines[i][0] == ")")
+                        or len(lines[i]) == 0
+                    ):
+                        func += lines[i] + "\n"
                     else:
-                        break 
+                        break
                 res.append(func)
             else:
                 i += 1
         return res
 
-
     def fetch_skills(self, target_task: str):
         docs = [
             (text.page_content, text.metadata["code"])
-            for text in self.db.similarity_search(
-                target_task, k=7
-            )
+            for text in self.db.similarity_search(target_task, k=7)
         ]
         return docs
 
@@ -97,7 +95,7 @@ class SkillManager:
             page_content=skill_description, metadata={"code": skill_source}
         )
         self.db.add_documents([doc])
-        logger.info(f'Skill added {skill_description}')
+        logger.info(f"Skill added {skill_description}")
 
     def save(self):
         self.db.persist()

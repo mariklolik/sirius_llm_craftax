@@ -3,6 +3,7 @@ def distans(x1, y1, x2, y2):
         return True
     return False
 
+
 def format_text_with_state(text: str, state, *args):
     player_health = state.player_health
     player_hunger = state.player_hunger
@@ -23,6 +24,6 @@ def format_text_with_state(text: str, state, *args):
         player_energy,
         is_sleeping,
         inv,
-        *args
+        *args,
     )
     return text

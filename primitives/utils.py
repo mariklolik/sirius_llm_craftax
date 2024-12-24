@@ -91,6 +91,7 @@ def find_block_all(
 
     return jnp.stack(res, axis=1)
 
+
 # def pr(arr):
 #     for i in range(18, 32):
 #         s = str(i) if i != state.player_position[0] else 'X '
