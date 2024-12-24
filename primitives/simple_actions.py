@@ -35,6 +35,7 @@ def act_SLEEP(env):
 def act_PLACE_STONE(env):
     executor(env, [Action.PLACE_STONE])
 
+from craftax.craftax.constants import BlockType
 def act_PLACE_TABLE(env):
     if (check_forward_block(env) != BlockType.CRAFTING_TABLE):
         act_DO(env)

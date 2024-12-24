@@ -41,7 +41,8 @@ modules = import_all_modules_from_folder("primitives")
 
 eval_context = create_eval_context(modules)
 
-SEED = 148722852691337
+import random
+SEED = 44455
 
 def invoke_action(env, code):
     global eval_context
